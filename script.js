@@ -423,71 +423,116 @@ document.addEventListener('DOMContentLoaded', () => {
   overlay.addEventListener('click', closeModal);
 
   
+  // Helper: check if mouse is in the asteroid belt ring zone
+  function isInBeltRing(e, beltEl) {
+    const rect = beltEl.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const outerRadius = rect.width / 2;
+    // Inner boundary at Mars orbit proportion (390/470 ≈ 0.83)
+    const innerRadius = outerRadius * 0.83;
+    return dist >= innerRadius && dist <= outerRadius;
+  }
+
+  // Helper: position tooltip within viewport
+  function positionTooltip(e) {
+    const tooltipWidth = 270;
+    const tooltipHeight = 150;
+    const padding = 20;
+
+    let left = e.clientX + padding;
+    let top = e.clientY - padding;
+
+    if (left + tooltipWidth > window.innerWidth) {
+      left = e.clientX - tooltipWidth - padding;
+    }
+    if (top + tooltipHeight > window.innerHeight) {
+      top = e.clientY - tooltipHeight - padding;
+    }
+    if (top < 0) {
+      top = e.clientY + padding;
+    }
+    if (left < 0) {
+      left = e.clientX + padding;
+    }
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+  }
+
+  // Helper: build tooltip HTML
+  function buildTooltipHTML(item) {
+    return `
+      <b style="color:#00ff00; font-size: 18px;">${item.name}</b>
+      <div style="margin-top: 5px; font-style: italic;">${item.subtitle}</div>
+      <div style="font-size: 11px; color: #00cc00; margin-top: 5px;">${item.info}</div>
+      ${item.distance !== "0" ? `<div style="color:#00ff00; margin-top:5px;">📍 Distance: ${item.distance}</div>` : ''}
+      <div style="font-size: 10px; color: #00ff00; margin-top: 8px; animation: blink 1s infinite;">► CLICK TO ACCESS TERMINAL</div>
+    `;
+  }
+
   Object.keys(planetData).forEach(name => {
     let el;
-    
-    
+
     if (name === 'asteroid-belt') {
       el = document.querySelector('[data-name="asteroid-belt"]');
     } else {
       el = document.querySelector(`.${name}`);
     }
-    
+
     if (!el) return;
 
-    
+    // Asteroid belt: only respond in the ring zone (beyond Mars orbit)
+    if (name === 'asteroid-belt') {
+      let beltTooltipVisible = false;
+
+      el.addEventListener('mousemove', (e) => {
+        if (isInBeltRing(e, el)) {
+          if (!beltTooltipVisible) {
+            tooltip.innerHTML = buildTooltipHTML(planetData[name]);
+            tooltip.classList.add('show');
+            beltTooltipVisible = true;
+          }
+          positionTooltip(e);
+        } else if (beltTooltipVisible) {
+          tooltip.classList.remove('show');
+          beltTooltipVisible = false;
+        }
+      });
+
+      el.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('show');
+        beltTooltipVisible = false;
+      });
+
+      el.addEventListener('click', (e) => {
+        if (isInBeltRing(e, el)) {
+          e.stopPropagation();
+          showModal(name);
+        }
+      });
+      return;
+    }
+
+    // Regular planets
     el.addEventListener('mouseenter', () => {
-      const item = planetData[name];
-      tooltip.innerHTML = `
-        <b style="color:#00ff00; font-size: 18px;">${item.name}</b>
-        <div style="margin-top: 5px; font-style: italic;">${item.subtitle}</div>
-        <div style="font-size: 11px; color: #00cc00; margin-top: 5px;">${item.info}</div>
-        ${item.distance !== "0" ? `<div style="color:#00ff00; margin-top:5px;">📍 Distance: ${item.distance}</div>` : ''}
-        <div style="font-size: 10px; color: #00ff00; margin-top: 8px; animation: blink 1s infinite;">► CLICK TO ACCESS TERMINAL</div>
-      `;
+      tooltip.innerHTML = buildTooltipHTML(planetData[name]);
       tooltip.classList.add('show');
-      if (name !== 'sun' && name !== 'asteroid-belt') toggleOrbit(el, true);
+      if (name !== 'sun') toggleOrbit(el, true);
     });
 
     el.addEventListener('mouseleave', () => {
       tooltip.classList.remove('show');
-      if (name !== 'sun' && name !== 'asteroid-belt') toggleOrbit(el, false);
+      if (name !== 'sun') toggleOrbit(el, false);
     });
 
-    
     el.addEventListener('mousemove', (e) => {
-      const tooltipWidth = 270;
-      const tooltipHeight = 150;
-      const padding = 20;
-      
-      let left = e.clientX + padding;
-      let top = e.clientY - padding;
-      
-      
-      if (left + tooltipWidth > window.innerWidth) {
-        left = e.clientX - tooltipWidth - padding;
-      }
-      
-      
-      if (top + tooltipHeight > window.innerHeight) {
-        top = e.clientY - tooltipHeight - padding;
-      }
-      
-      
-      if (top < 0) {
-        top = e.clientY + padding;
-      }
-      
-      
-      if (left < 0) {
-        left = e.clientX + padding;
-      }
-      
-      tooltip.style.left = `${left}px`;
-      tooltip.style.top = `${top}px`;
+      positionTooltip(e);
     });
 
-    
     el.addEventListener('click', (e) => {
       e.stopPropagation();
       showModal(name);
