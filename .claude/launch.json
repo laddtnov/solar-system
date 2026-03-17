@@ -12,6 +12,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8080"],
       "port": 8080
+    },
+    {
+      "name": "GE-776",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "/Users/laddtnov/Proton Drive/Learning/Typescript/HTML_Css/GE-776-Archive", "-l", "3001", "--no-clipboard"],
+      "port": 3001
     }
   ]
 }
