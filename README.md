@@ -10,7 +10,7 @@
 
 A real-time gravitational physics simulation of the solar system with 20 bodies, orbit trails, time acceleration (1x-200x), and a Fallout 3-style terminal interface.
 
-[🌐 Live Demo](https://interactive-solar-system-rose.vercel.app/) • [📁 View Code](https://interactive-solar-system-rose.vercel.app/)
+[🌐 Live Demo](https://laddtnov.xyz/) • [📁 View Code](https://laddtnov.xyz/)
 ![Portfolio Preview](screenshot-desktop.png)![Portfolio Preview](screenshot-terminal.png)![Portfolio Preview](screenshot-mobile2.png)!
 
 
@@ -171,8 +171,8 @@ main.js
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/laddtnov/css-solar-system-ultimate.git
-cd css-solar-system-ultimate
+git clone https://github.com/laddtnov/laddtnov-hub.git
+cd interactive-solar-system
 ```
 
 2. **Open in browser**
@@ -194,7 +194,7 @@ That's it! No build process, no dependencies. 🎉
 1. Push code to GitHub
 2. Go to **Settings → Pages**
 3. Select **Deploy from main branch**
-4. Access at `https://yourusername.github.io/css-solar-system-ultimate/`
+4. Access at `https://yourusername.github.io/laddtnov-hub/`
 
 ---
 
