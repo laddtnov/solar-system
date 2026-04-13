@@ -10,7 +10,7 @@
 
 A real-time gravitational physics simulation of the solar system with 20 bodies, orbit trails, time acceleration (1x-200x), and a Fallout 3-style terminal interface.
 
-[🌐 Live Demo](https://laddtnov.xyz/) • [📁 View Code](https://laddtnov.xyz/)
+[🌐 Live Demo](https://solar.laddtnov.xyz/) • [📁 View Code](https://solar.laddtnov.xyz/)
 ![Portfolio Preview](screenshot-desktop.png)![Portfolio Preview](screenshot-terminal.png)![Portfolio Preview](screenshot-mobile2.png)!
 
 
@@ -481,7 +481,7 @@ copies or substantial portions of the Software.
 **Laddtnov**
 - GitHub: [@laddtnov](https://github.com/laddtnov)
 - Email: novytskiyvladislav@proton.me
-- Portfolio: [laddtnov.github.io/portfolio-website](https://laddtnov.github.io/portfolio-website/)
+- Portfolio: [laddtnov.github.io/portfolio-website](https://laddtnov.xyz/)
 
 ---
 
@@ -489,7 +489,7 @@ copies or substantial portions of the Software.
 
 Part of the **Cyberpunk Portfolio Collection**:
 
-1. [🌌 Solar System Simulator](https://github.com/laddtnov/css-solar-system-ultimate) - This project
+1. [🌌 Solar System Simulator](https://github.com/laddtnov/laddtnov-hub) - This project
 2. [💼 Cyberpunk Portfolio](https://github.com/laddtnov/portfolio-website) - Personal portfolio
 3. [📚 Book Tracker](https://github.com/laddtnov/cyberpunk-book-tracker) - Reading tracker
 
