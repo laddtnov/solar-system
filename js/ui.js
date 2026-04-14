@@ -114,6 +114,42 @@ function buildTooltipHTML(item) {
     <div style="font-size:10px;color:#00ff00;margin-top:8px;animation:blink 1s infinite">\u25ba CLICK TO ACCESS TERMINAL</div>`
 }
 
+function formatTimestamp(isoString) {
+  if (!isoString) return 'NOT SYNCED'
+  const date = new Date(isoString)
+  if (Number.isNaN(date.getTime())) return 'NOT SYNCED'
+  return date.toLocaleString()
+}
+
+function buildDataProvenanceLines(dataService) {
+  try {
+    const snapshot = dataService?.getSnapshot?.()
+    const mode = snapshot?.meta?.mode ? snapshot.meta.mode.toUpperCase() : 'LOCAL'
+    const sources = snapshot?.meta?.sources?.map(s => s.label).join(', ') || 'Embedded Solar Data'
+    const syncedAt = formatTimestamp(snapshot?.meta?.syncedAt)
+    const liveCount = snapshot?.live?.exoplanetSummary?.confirmedPlanetCount
+
+    const lines = [
+      '>> DATA PROVENANCE',
+      `Mode: ${mode}`,
+      `Sources: ${sources}`,
+      `Last Sync: ${syncedAt}`,
+    ]
+
+    if (liveCount !== null && liveCount !== undefined) {
+      lines.push(`Exoplanet Count (NASA): ${liveCount}`)
+    }
+    return lines
+  } catch {
+    return [
+      '>> DATA PROVENANCE',
+      'Mode: LOCAL',
+      'Sources: Embedded Solar Data',
+      'Last Sync: NOT SYNCED',
+    ]
+  }
+}
+
 // ── Asteroid Belt Ring-Zone Detection ──────────────────────────────────────
 
 function isInBeltRing(e, beltEl) {
@@ -130,7 +166,7 @@ function isInBeltRing(e, beltEl) {
 
 // ── Modal ──────────────────────────────────────────────────────────────────
 
-async function showModal(planetName, modal, modalContent, overlay) {
+async function showModal(planetName, modal, modalContent, overlay, dataService) {
   const data = planetData[planetName]
   if (!data) return
 
@@ -176,6 +212,8 @@ async function showModal(planetName, modal, modalContent, overlay) {
     '>> CLASSIFIED INTEL',
     ...data.facts.map((f, i) => `${i + 1}. ${f}`),
     '',
+    ...buildDataProvenanceLines(dataService),
+    '',
     '> DATA TRANSFER COMPLETE',
     '> PRESS [ESC] OR [X] TO EXIT'
   ]
@@ -183,9 +221,161 @@ async function showModal(planetName, modal, modalContent, overlay) {
   await typeAllLines(terminalContainer, lines, 20)
 }
 
+function createCommandCenter({ simulation, dataService, bus }) {
+  if (document.getElementById('command-center')) return
+
+  const root = document.createElement('section')
+  root.id = 'command-center'
+  root.innerHTML = `
+    <div id="command-log" class="command-log"></div>
+    <form id="command-form" autocomplete="off">
+      <span class="command-prompt">CMD&gt;</span>
+      <input id="command-input" type="text" placeholder="help, sync data, status data, speed 50..." />
+    </form>
+  `
+  document.body.appendChild(root)
+
+  const log = root.querySelector('#command-log')
+  const form = root.querySelector('#command-form')
+  const input = root.querySelector('#command-input')
+  let syncInProgress = false
+
+  function appendLog(message, tone = 'info') {
+    const line = document.createElement('div')
+    line.className = `command-line ${tone}`
+    line.textContent = message
+    log.appendChild(line)
+    log.scrollTop = log.scrollHeight
+  }
+
+  function showDataStatus() {
+    const snapshot = dataService?.getSnapshot?.()
+    const mode = snapshot?.meta?.mode?.toUpperCase() || 'LOCAL'
+    const sourceCount = snapshot?.meta?.sources?.length || 1
+    const lastSync = formatTimestamp(snapshot?.meta?.syncedAt)
+    appendLog(`DATA MODE: ${mode} | SOURCES: ${sourceCount} | LAST SYNC: ${lastSync}`)
+  }
+
+  async function runCommand(raw) {
+    const command = raw.trim()
+    if (!command) return
+
+    appendLog(`> ${command}`, 'echo')
+
+    const [verb, ...args] = command.toLowerCase().split(/\s+/)
+
+    if (verb === 'help') {
+      appendLog('Commands: help | sync data | status data | speed <1|10|50|200> | pause | resume | clear')
+      return
+    }
+
+    if (verb === 'clear') {
+      log.innerHTML = ''
+      return
+    }
+
+    if (verb === 'sync' && args.join(' ') === 'data') {
+      if (!dataService?.sync) {
+        appendLog('Data service unavailable.', 'error')
+        return
+      }
+      if (syncInProgress) {
+        appendLog('Sync already running...', 'warn')
+        return
+      }
+
+      syncInProgress = true
+      appendLog('Starting sync from online source...')
+      try {
+        const snapshot = await dataService.sync()
+        const count = snapshot?.live?.exoplanetSummary?.confirmedPlanetCount
+        if (count !== null && count !== undefined) {
+          appendLog(`Sync complete. NASA exoplanet count: ${count}`, 'ok')
+        } else {
+          appendLog('Sync complete. Live source responded without count.', 'warn')
+        }
+      } catch {
+        appendLog('Sync failed. Local snapshot still active.', 'error')
+      } finally {
+        syncInProgress = false
+      }
+      return
+    }
+
+    if (verb === 'status' && args.join(' ') === 'data') {
+      showDataStatus()
+      return
+    }
+
+    if (verb === 'pause') {
+      simulation?.pause?.()
+      appendLog('Simulation paused.', 'ok')
+      return
+    }
+
+    if (verb === 'resume') {
+      simulation?.resume?.()
+      appendLog('Simulation resumed.', 'ok')
+      return
+    }
+
+    if (verb === 'speed') {
+      const value = Number(args[0])
+      const speeds = [1, 10, 50, 200]
+      if (!speeds.includes(value)) {
+        appendLog('Invalid speed. Use 1, 10, 50, or 200.', 'error')
+        return
+      }
+      if (!simulation) {
+        appendLog('Simulation unavailable.', 'error')
+        return
+      }
+      simulation.speedIdx = speeds.indexOf(value)
+      simulation.timeScale = value
+      simulation._updateHUD?.()
+      appendLog(`Speed set to ${value}x.`, 'ok')
+      return
+    }
+
+    appendLog('Unknown command. Type "help".', 'warn')
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const value = input.value
+    input.value = ''
+    await runCommand(value)
+  })
+
+  bus?.on?.('data:sync:error', () => appendLog('Event: data sync error, fallback active.', 'warn'))
+  bus?.on?.('data:sync:done', (payload) => {
+    const syncedAt = formatTimestamp(payload?.snapshot?.meta?.syncedAt)
+    appendLog(`Event: data synced at ${syncedAt}`, 'ok')
+  })
+
+  appendLog('Command center online. Type "help".', 'ok')
+  showDataStatus()
+}
+
 // ── Initialise all UI interactions ─────────────────────────────────────────
 
-export function initUI(simulation) {
+export function initUI(options = null) {
+  let simulation = null
+  let dataService = null
+  let bus = null
+
+  if (
+    options &&
+    typeof options === 'object' &&
+    ('simulation' in options || 'dataService' in options || 'bus' in options)
+  ) {
+    simulation = options.simulation ?? null
+    dataService = options.dataService ?? null
+    bus = options.bus ?? null
+  } else {
+    simulation = options
+  }
+
   const tooltip      = document.getElementById('planet-info')
   const modal        = document.getElementById('planet-modal')
   const modalContent = document.getElementById('modal-content')
@@ -228,7 +418,7 @@ export function initUI(simulation) {
       })
       el.addEventListener('mouseleave', () => { tooltip.classList.remove('show'); beltVisible = false })
       el.addEventListener('click', e => {
-        if (isInBeltRing(e, el)) { e.stopPropagation(); showModal(name, modal, modalContent, overlay) }
+        if (isInBeltRing(e, el)) { e.stopPropagation(); showModal(name, modal, modalContent, overlay, dataService) }
       })
       return
     }
@@ -244,11 +434,12 @@ export function initUI(simulation) {
       if (simulation) simulation.resume()
     })
     el.addEventListener('mousemove', e => positionTooltip(e, tooltip))
-    el.addEventListener('click', e => { e.stopPropagation(); showModal(name, modal, modalContent, overlay) })
+    el.addEventListener('click', e => { e.stopPropagation(); showModal(name, modal, modalContent, overlay, dataService) })
   })
 
   // Escape closes modal
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() })
+  createCommandCenter({ simulation, dataService, bus })
 }
 
 // ── Star Parallax (canvas background) ──────────────────────────────────────
