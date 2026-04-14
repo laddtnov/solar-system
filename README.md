@@ -481,7 +481,7 @@ copies or substantial portions of the Software.
 **Laddtnov**
 - GitHub: [@laddtnov](https://github.com/laddtnov)
 - Email: novytskiyvladislav@proton.me
-- Portfolio: [laddtnov.github.io/portfolio-website](https://laddtnov.xyz/)
+- Portfolio: [laddtnov.xyz](https://laddtnov.xyz/)
 
 ---
 
