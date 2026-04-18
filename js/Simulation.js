@@ -209,12 +209,14 @@ export class Simulation {
         this.paused = !this.paused
         this._updateHUD()
       }
-      // Number keys 1-4 for direct speed selection
-      const num = parseInt(e.key)
-      if (num >= 1 && num <= 4) {
-        this.speedIdx = num - 1
-        this.timeScale = SPEEDS[this.speedIdx]
-        this._updateHUD()
+      // Speed presets: Shift+1..4
+      if (e.shiftKey) {
+        const num = parseInt(e.key)
+        if (num >= 1 && num <= 4) {
+          this.speedIdx = num - 1
+          this.timeScale = SPEEDS[this.speedIdx]
+          this._updateHUD()
+        }
       }
     })
   }
@@ -287,8 +289,7 @@ export class Simulation {
       const body = this.bodyMap.get(cfg.id)
 
       if (!cfg.parent) {
-        // Central body stays at origin
-        body.pos = new Vector(0, 0)
+        body.pos = new Vector(cfg.startX ?? 0, cfg.startY ?? 0)
         body.vel = new Vector(0, 0)
         continue
       }

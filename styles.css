@@ -981,20 +981,15 @@ body {
 
 /* ── Scene-Specific Body Styles ─────────────────────────────────────────── */
 
-/* Scene body base */
+/* Scene body base — must match solar bodies: top:0; left:0 so JS transform
+   translate(cx+x, cy+y) places correctly without double-offset */
 .scene-body {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  left: 0;
   border-radius: 50%;
-  transform: translate(-50%, -50%);
   z-index: 10;
   cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.scene-body:hover {
-  transform: translate(-50%, -50%) scale(1.1);
 }
 
 /* Sirius A - Blue-white main sequence star */
@@ -1149,17 +1144,435 @@ body {
   box-shadow: 0 0 10px rgba(102, 136, 204, 0.5);
 }
 
+/* Scene switcher — vertical stack */
+#scene-switcher {
+  flex-direction: column;
+}
+
+/* Scene label tooltip on hover */
+#scene-switcher .scene-btn {
+  position: relative;
+}
+
+#scene-switcher .scene-btn::after {
+  content: attr(title);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 8, 0, 0.95);
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  letter-spacing: 1px;
+}
+
+#scene-switcher .scene-btn:hover::after {
+  opacity: 1;
+}
+
 /* Scene switcher mobile responsive */
 @media (max-width: 768px) {
   #scene-switcher {
     top: auto;
     bottom: 180px;
     left: 15px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 80px;
   }
-  
+
   #scene-switcher .scene-btn {
     width: 32px;
     height: 32px;
     font-size: 14px;
   }
+}
+
+/* ── New Scene Backgrounds ──────────────────────────────────────────────────── */
+
+.bg-blackhole {
+  background:
+    radial-gradient(ellipse at 25% 40%, rgba(255, 40, 0, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 75% 60%, rgba(255, 80, 0, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at center, #050000 0%, #000000 100%);
+}
+
+.bg-galaxy {
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(80, 0, 160, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 40, 100, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(30, 0, 80, 0.15) 0%, transparent 70%),
+    radial-gradient(circle at center, #07000f 0%, #000005 100%);
+}
+
+/* ── Black Hole Scene Bodies ────────────────────────────────────────────────── */
+
+/* TON 618 — hypermassive quasar BH */
+.scene-body.ton-618 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, #000000 20%, #1a0000 55%, #2e0500 100%);
+  box-shadow:
+    0 0 0 3px rgba(255, 60, 0, 0.45),
+    0 0 0 18px rgba(255, 60, 0, 0.12),
+    0 0 0 50px rgba(200, 30, 0, 0.04);
+}
+
+.scene-body.ton-618 .accretion-disk {
+  width: 450px;
+  height: 450px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(255, 60, 0, 0.08) 8%,
+    rgba(255, 100, 0, 0.35) 18%,
+    rgba(255, 140, 30, 0.55) 25%,
+    rgba(255, 100, 0, 0.35) 32%,
+    rgba(255, 60, 0, 0.08) 42%,
+    transparent 55%,
+    rgba(255, 80, 0, 0.12) 68%,
+    rgba(255, 120, 0, 0.30) 78%,
+    rgba(255, 80, 0, 0.12) 88%,
+    transparent 100%
+  );
+  animation: diskRotate 12s linear infinite;
+}
+
+/* M87* — first photographed BH */
+.scene-body.m87-bh {
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, #000000 25%, #120400 58%, #221000 100%);
+  box-shadow:
+    0 0 0 2px rgba(255, 140, 0, 0.5),
+    0 0 0 12px rgba(255, 100, 0, 0.18),
+    0 0 0 35px rgba(200, 70, 0, 0.05);
+}
+
+.scene-body.m87-bh .accretion-disk {
+  width: 320px;
+  height: 320px;
+  background: conic-gradient(
+    from 160deg,
+    transparent 0%,
+    rgba(255, 140, 30, 0.1) 10%,
+    rgba(255, 110, 0, 0.4) 20%,
+    rgba(255, 160, 40, 0.6) 28%,
+    rgba(255, 110, 0, 0.4) 36%,
+    rgba(255, 140, 30, 0.1) 46%,
+    transparent 60%,
+    rgba(255, 100, 0, 0.15) 75%,
+    rgba(255, 120, 20, 0.35) 85%,
+    transparent 100%
+  );
+  animation: diskRotate 22s linear infinite;
+}
+
+/* Cygnus X-1 — stellar-mass BH in binary */
+.scene-body.cygnus-x1 {
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, #000000 40%, #0e0100 72%, #1c0400 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 100, 0, 0.65),
+    0 0 0 6px rgba(255, 80, 0, 0.28),
+    0 0 25px rgba(255, 60, 0, 0.35);
+}
+
+.scene-body.cygnus-x1 .accretion-disk {
+  width: 160px;
+  height: 160px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(255, 120, 0, 0.25) 12%,
+    rgba(255, 180, 0, 0.55) 22%,
+    rgba(255, 120, 0, 0.25) 32%,
+    transparent 50%,
+    rgba(255, 100, 0, 0.20) 68%,
+    rgba(255, 160, 0, 0.45) 78%,
+    transparent 100%
+  );
+  animation: diskRotate 6s linear infinite;
+}
+
+/* HDE 226868 — blue supergiant companion to Cygnus X-1 */
+.scene-body.hde-226868 {
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle at 35% 35%, #e8f4ff, #99bbee 45%, #5577bb 100%);
+  box-shadow:
+    0 0 25px rgba(150, 190, 240, 0.85),
+    0 0 55px rgba(100, 150, 220, 0.4);
+}
+
+/* ── Supergiant Star Bodies ──────────────────────────────────────────────────── */
+
+/* Betelgeuse — red supergiant */
+.scene-body.betelgeuse {
+  width: 210px;
+  height: 210px;
+  background: radial-gradient(circle at 38% 35%, #ffaa77, #ff4400 42%, #cc2200 68%, #881100 100%);
+  box-shadow:
+    0 0 80px rgba(255, 68, 0, 0.9),
+    0 0 160px rgba(200, 40, 0, 0.5),
+    0 0 280px rgba(150, 20, 0, 0.2);
+  animation: supergiiantPulse 9s ease-in-out infinite;
+}
+
+/* VY Canis Majoris — extreme red hypergiant */
+.scene-body.vy-canis-majoris {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle at 42% 40%, #ff8855, #dd2200 38%, #aa1100 62%, #660800 100%);
+  box-shadow:
+    0 0 100px rgba(200, 30, 0, 0.9),
+    0 0 220px rgba(150, 20, 0, 0.5),
+    0 0 380px rgba(100, 10, 0, 0.2);
+  animation: supergiiantPulse 13s ease-in-out infinite;
+}
+
+/* R136a1 — blue Wolf-Rayet supergiant */
+.scene-body.r136a1 {
+  width: 110px;
+  height: 110px;
+  background: radial-gradient(circle at 35% 33%, #ffffff, #bbddff 28%, #6699dd 62%, #334488 100%);
+  box-shadow:
+    0 0 60px rgba(180, 215, 255, 0.95),
+    0 0 130px rgba(130, 175, 255, 0.5),
+    0 0 220px rgba(100, 145, 255, 0.2);
+  animation: wolfRayetWind 3.5s ease-in-out infinite;
+}
+
+@keyframes supergiiantPulse {
+  0%, 100% { filter: brightness(1); }
+  50%       { filter: brightness(1.18); }
+}
+
+@keyframes wolfRayetWind {
+  0%, 100% {
+    box-shadow: 0 0 60px rgba(180, 215, 255, 0.95), 0 0 130px rgba(130, 175, 255, 0.5), 0 0 220px rgba(100, 145, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 85px rgba(210, 230, 255, 1), 0 0 180px rgba(170, 205, 255, 0.7), 0 0 300px rgba(150, 180, 255, 0.35);
+  }
+}
+
+/* ── Neutron Star Bodies ─────────────────────────────────────────────────────── */
+
+/* PSR J0348+0432 — most massive known neutron star */
+.scene-body.psr-j0348 {
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle at 40% 38%, #bbddff, #77aaff 48%, #3366cc 100%);
+  box-shadow:
+    0 0 30px rgba(110, 170, 255, 0.85),
+    0 0 65px rgba(80, 140, 255, 0.4);
+  animation: pulse 0.0893s infinite;
+}
+
+.scene-body.psr-j0348::before,
+.scene-body.psr-j0348::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(110, 170, 255, 0.85), transparent);
+  transform-origin: center;
+  animation: pulsarBeam 0.0893s infinite;
+}
+
+.scene-body.psr-j0348::before { transform: translate(-50%, -50%) rotate(30deg); }
+.scene-body.psr-j0348::after  { transform: translate(-50%, -50%) rotate(120deg); }
+
+/* PSR J0348 companion white dwarf */
+.scene-body.psr-j0348-companion {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #eeeeff 50%, #ccccee 100%);
+  box-shadow:
+    0 0 16px rgba(210, 210, 255, 0.9),
+    0 0 35px rgba(180, 180, 255, 0.4);
+}
+
+/* SGR 1806-20 — magnetar */
+.scene-body.magnetar {
+  width: 28px;
+  height: 28px;
+  background: radial-gradient(circle at 40% 38%, #ffaaff, #cc44ff 48%, #8800cc 100%);
+  box-shadow:
+    0 0 35px rgba(200, 80, 255, 0.85),
+    0 0 70px rgba(160, 40, 255, 0.4);
+  animation: magnetarPulse 7.5s ease-in-out infinite;
+}
+
+.scene-body.magnetar::before,
+.scene-body.magnetar::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(200, 80, 255, 0.75), transparent);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.scene-body.magnetar::before { transform: translate(-50%, -50%) rotate(25deg); }
+.scene-body.magnetar::after  { transform: translate(-50%, -50%) rotate(115deg); }
+
+@keyframes magnetarPulse {
+  0%, 100% {
+    box-shadow: 0 0 35px rgba(200, 80, 255, 0.85), 0 0 70px rgba(160, 40, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 55px rgba(220, 110, 255, 1), 0 0 110px rgba(190, 70, 255, 0.7), 0 0 180px rgba(160, 40, 255, 0.2);
+  }
+}
+
+/* ── Galaxy Bodies ───────────────────────────────────────────────────────────── */
+
+/* Base: galaxy bodies use ::before for the visual so JS transform doesn't fight CSS */
+.scene-body.milky-way,
+.scene-body.andromeda,
+.scene-body.large-magellanic-cloud,
+.scene-body.m87-galaxy {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 50%;
+}
+
+/* Milky Way — barred spiral */
+.scene-body.milky-way {
+  width: 200px;
+  height: 200px;
+}
+
+.scene-body.milky-way::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #fffce0 0%, #ffd966 10%, rgba(255, 200, 120, 0.5) 30%, transparent 55%),
+    conic-gradient(
+      from 15deg,
+      transparent 0deg, rgba(255, 220, 150, 0.38) 20deg,
+      transparent 45deg, rgba(220, 195, 130, 0.18) 70deg,
+      transparent 100deg, rgba(255, 220, 150, 0.38) 140deg,
+      transparent 170deg, rgba(220, 195, 130, 0.18) 200deg,
+      transparent 230deg, rgba(255, 220, 150, 0.38) 265deg,
+      transparent 295deg, rgba(220, 195, 130, 0.18) 330deg,
+      transparent 360deg
+    );
+  box-shadow:
+    0 0 50px rgba(255, 220, 160, 0.55),
+    0 0 110px rgba(220, 190, 120, 0.22);
+  animation: galaxySpin 130s linear infinite;
+  pointer-events: none;
+}
+
+/* Andromeda — large tilted spiral (slightly cooler blue-white tone) */
+.scene-body.andromeda {
+  width: 240px;
+  height: 240px;
+}
+
+.scene-body.andromeda::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #f0f4ff 0%, #c8d8ff 12%, rgba(180, 210, 255, 0.45) 30%, transparent 55%),
+    conic-gradient(
+      from -20deg,
+      transparent 0deg, rgba(200, 220, 255, 0.35) 22deg,
+      transparent 48deg, rgba(160, 190, 240, 0.18) 76deg,
+      transparent 108deg, rgba(200, 220, 255, 0.35) 148deg,
+      transparent 178deg, rgba(160, 190, 240, 0.18) 212deg,
+      transparent 248deg, rgba(200, 220, 255, 0.35) 280deg,
+      transparent 318deg, rgba(160, 190, 240, 0.18) 350deg,
+      transparent 360deg
+    );
+  box-shadow:
+    0 0 55px rgba(190, 215, 255, 0.5),
+    0 0 120px rgba(160, 195, 255, 0.2);
+  animation: galaxySpin 160s linear infinite reverse;
+  pointer-events: none;
+}
+
+/* Large Magellanic Cloud — irregular galaxy */
+.scene-body.large-magellanic-cloud {
+  width: 130px;
+  height: 130px;
+}
+
+.scene-body.large-magellanic-cloud::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 40% 60% 55% 45% / 45% 50% 60% 50%;
+  background:
+    radial-gradient(circle at 40% 45%, #e8f0ff 0%, #b8d0ff 15%, rgba(160, 200, 255, 0.4) 38%, transparent 60%),
+    radial-gradient(circle at 65% 55%, rgba(180, 215, 255, 0.3) 0%, transparent 40%);
+  box-shadow:
+    0 0 35px rgba(180, 215, 255, 0.5),
+    0 0 75px rgba(150, 190, 255, 0.2);
+  animation: galaxySpin 200s linear infinite;
+  pointer-events: none;
+}
+
+/* M87 — giant elliptical galaxy */
+.scene-body.m87-galaxy {
+  width: 170px;
+  height: 170px;
+}
+
+.scene-body.m87-galaxy::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 50%, #fff8e8 0%, #ffcc88 12%, rgba(240, 200, 140, 0.45) 35%, transparent 58%),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(220, 180, 120, 0.25) 0%, transparent 65%);
+  box-shadow:
+    0 0 55px rgba(240, 200, 140, 0.55),
+    0 0 120px rgba(200, 160, 100, 0.22);
+  pointer-events: none;
+}
+
+/* M87 jet */
+.scene-body.m87-galaxy::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255, 180, 80, 0.8), rgba(255, 220, 120, 0.4), transparent);
+  transform: translate(-10%, -50%) rotate(-20deg);
+  pointer-events: none;
+  animation: m87Jet 4s ease-in-out infinite;
+}
+
+@keyframes galaxySpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes m87Jet {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
 }

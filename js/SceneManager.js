@@ -36,6 +36,18 @@ export class SceneManager {
         case '3':
           this.switchScene('exoplanets')
           break
+        case '4':
+          this.switchScene('blackholes')
+          break
+        case '5':
+          this.switchScene('supergiants')
+          break
+        case '6':
+          this.switchScene('neutrons')
+          break
+        case '7':
+          this.switchScene('galaxies')
+          break
       }
     })
   }
@@ -101,15 +113,15 @@ export class SceneManager {
    * Hide all celestial body DOM elements
    */
   _hideAllBodies() {
-    // Hide solar system bodies
     document.querySelectorAll('.space > div[data-body], .space > .satellite').forEach(el => {
       el.style.display = 'none'
     })
-    
-    // Hide scene-specific bodies
     document.querySelectorAll('.scene-body').forEach(el => {
       el.style.display = 'none'
     })
+    // Asteroid belt is CSS-only (no data-body) — hide it here, restore in solar only
+    const belt = document.querySelector('.asteroid-belt')
+    if (belt) belt.style.display = 'none'
   }
 
   /**
@@ -142,6 +154,10 @@ export class SceneManager {
       }
     })
     
+    // Restore asteroid belt only for the solar scene
+    const belt = document.querySelector('.asteroid-belt')
+    if (belt) belt.style.display = scene.id === 'solar' ? '' : 'none'
+
     // Build bodies using Simulation's method for proper position/velocity calculation
     if (this.simulation && configs.length > 0) {
       this.simulation.buildBodiesFromConfig(configs)
@@ -155,12 +171,12 @@ export class SceneManager {
     let el = document.querySelector(config.domSelector)
     
     if (!el) {
-      // Create new element for scene body
       el = document.createElement('div')
-      el.className = `scene-body ${config.id}`
+      // Use the CSS class from domSelector so styles apply correctly
+      const cssClass = config.domSelector.replace(/^\./, '')
+      el.className = `scene-body ${cssClass}`
       el.setAttribute('data-body', config.id)
-      
-      // Add special visual effects
+
       if (config.pulseEffect) {
         el.classList.add('pulsar')
       }
@@ -173,8 +189,7 @@ export class SceneManager {
       if (config.glowEffect) {
         el.classList.add('red-dwarf')
       }
-      
-      // Add to container
+
       this.container.appendChild(el)
     }
     
@@ -201,6 +216,12 @@ export class SceneManager {
         break
       case 'deep':
         canvas.classList.add('bg-deep')
+        break
+      case 'blackhole':
+        canvas.classList.add('bg-blackhole')
+        break
+      case 'galaxy':
+        canvas.classList.add('bg-galaxy')
         break
       default:
         canvas.classList.add('bg-stars')
