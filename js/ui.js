@@ -221,7 +221,7 @@ async function showModal(planetName, modal, modalContent, overlay, dataService) 
   await typeAllLines(terminalContainer, lines, 20)
 }
 
-function createCommandCenter({ simulation, dataService, bus }) {
+function createCommandCenter({ simulation, dataService, bus, sceneManager }) {
   if (document.getElementById('command-center')) return
 
   const root = document.createElement('section')
@@ -230,7 +230,7 @@ function createCommandCenter({ simulation, dataService, bus }) {
     <div id="command-log" class="command-log"></div>
     <form id="command-form" autocomplete="off">
       <span class="command-prompt">CMD&gt;</span>
-      <input id="command-input" type="text" placeholder="help, sync data, status data, speed 50..." />
+      <input id="command-input" type="text" placeholder="help, scene solar, scene stellar, speed 50..." />
     </form>
   `
   document.body.appendChild(root)
@@ -265,7 +265,31 @@ function createCommandCenter({ simulation, dataService, bus }) {
     const [verb, ...args] = command.toLowerCase().split(/\s+/)
 
     if (verb === 'help') {
-      appendLog('Commands: help | sync data | status data | speed <1|10|50|200> | pause | resume | clear')
+      appendLog('Commands: help | scene <solar|stellar|exoplanets> | sync data | status data | speed <1|10|50|200> | pause | resume | clear')
+      return
+    }
+
+    if (verb === 'scene') {
+      const sceneId = args[0]
+      const validScenes = ['solar', 'stellar', 'exoplanets']
+      if (!validScenes.includes(sceneId)) {
+        appendLog(`Invalid scene. Use: ${validScenes.join(', ')}`, 'error')
+        return
+      }
+      if (!sceneManager) {
+        appendLog('Scene manager unavailable.', 'error')
+        return
+      }
+      const success = await sceneManager.switchScene(sceneId)
+      if (success) {
+        appendLog(`Switched to ${sceneId} scene.`, 'ok')
+        // Update UI buttons
+        document.querySelectorAll('#scene-switcher .scene-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.scene === sceneId)
+        })
+      } else {
+        appendLog('Failed to switch scene.', 'error')
+      }
       return
     }
 
@@ -363,6 +387,7 @@ export function initUI(options = null) {
   let simulation = null
   let dataService = null
   let bus = null
+  let sceneManager = null
 
   if (
     options &&
@@ -372,6 +397,7 @@ export function initUI(options = null) {
     simulation = options.simulation ?? null
     dataService = options.dataService ?? null
     bus = options.bus ?? null
+    sceneManager = options.sceneManager ?? null
   } else {
     simulation = options
   }
@@ -390,15 +416,10 @@ export function initUI(options = null) {
   closeBtn.addEventListener('click', closeModal)
   overlay.addEventListener('click', closeModal)
 
-  // Attach per-body event listeners
-  Object.keys(planetData).forEach(name => {
-    let el
-    if (name === 'asteroid-belt') {
-      el = document.querySelector('[data-name="asteroid-belt"]')
-    } else {
-      el = document.querySelector(`.${name}`)
-    }
-    if (!el) return
+  // Attach listeners to a body element
+  function attachBodyListeners(el, name) {
+    if (!el || el._hasUIListeners) return
+    el._hasUIListeners = true
 
     // ── Asteroid Belt (special ring-zone handling) ──
     if (name === 'asteroid-belt') {
@@ -423,23 +444,55 @@ export function initUI(options = null) {
       return
     }
 
-    // ── Regular planets / moons / sun ──
+    // ── Regular celestial bodies ──
     el.addEventListener('mouseenter', () => {
       if (simulation) simulation.pause()
-      tooltip.innerHTML = buildTooltipHTML(planetData[name])
-      tooltip.classList.add('show')
+      const data = planetData[name]
+      if (data) {
+        tooltip.innerHTML = buildTooltipHTML(data)
+        tooltip.classList.add('show')
+      }
     })
     el.addEventListener('mouseleave', () => {
       tooltip.classList.remove('show')
       if (simulation) simulation.resume()
     })
     el.addEventListener('mousemove', e => positionTooltip(e, tooltip))
-    el.addEventListener('click', e => { e.stopPropagation(); showModal(name, modal, modalContent, overlay, dataService) })
+    el.addEventListener('click', e => {
+      e.stopPropagation()
+      if (planetData[name]) {
+        showModal(name, modal, modalContent, overlay, dataService)
+      }
+    })
+  }
+
+  // Attach per-body event listeners for existing bodies
+  Object.keys(planetData).forEach(name => {
+    let el
+    if (name === 'asteroid-belt') {
+      el = document.querySelector('[data-name="asteroid-belt"]')
+    } else {
+      el = document.querySelector(`.${name}`)
+    }
+    attachBodyListeners(el, name)
+  })
+
+  // Re-attach listeners when scene changes (for scene-specific bodies)
+  bus?.on?.('scene:changed', () => {
+    // Small delay to let DOM update
+    setTimeout(() => {
+      document.querySelectorAll('.scene-body[data-body]').forEach(el => {
+        const name = el.getAttribute('data-body')
+        if (planetData[name]) {
+          attachBodyListeners(el, name)
+        }
+      })
+    }, 50)
   })
 
   // Escape closes modal
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() })
-  createCommandCenter({ simulation, dataService, bus })
+  createCommandCenter({ simulation, dataService, bus, sceneManager })
 }
 
 // ── Star Parallax (canvas background) ──────────────────────────────────────

@@ -235,4 +235,89 @@ export class Simulation {
   togglePause() { this.paused = !this.paused; this._updateHUD() }
   pause() { if (!this.paused) { this.paused = true; this._updateHUD() } }
   resume() { if (this.paused) { this.paused = false; this._updateHUD() } }
+
+  // ── Scene Management ─────────────────────────────────────────────────────
+
+  /**
+   * Clear all current bodies from simulation
+   */
+  clearBodies() {
+    this.bodies = []
+    this.bodyMap.clear()
+  }
+
+  /**
+   * Set new bodies for the simulation
+   * Bodies should already have positions/velocities configured
+   */
+  setBodies(newBodies) {
+    this.bodies = newBodies
+    this.bodyMap.clear()
+    for (const body of newBodies) {
+      this.bodyMap.set(body.id, body)
+    }
+  }
+
+  /**
+   * Build bodies from configuration array
+   * Used by SceneManager for scene-specific bodies
+   */
+  buildBodiesFromConfig(configs) {
+    this.clearBodies()
+    
+    // First pass — create Body instances with placeholder positions
+    for (const cfg of configs) {
+      const body = new Body({
+        id:          cfg.id,
+        position:    new Vector(0, 0),
+        velocity:    new Vector(0, 0),
+        mass:        cfg.mass,
+        radius:      cfg.radius,
+        parent:      cfg.parent,
+        domSelector: cfg.domSelector,
+        color:       cfg.color,
+        trailMax:    cfg.trailMax,
+      })
+      this.bodies.push(body)
+      this.bodyMap.set(cfg.id, body)
+    }
+
+    // Second pass — set initial positions & circular-orbit velocities
+    for (const cfg of configs) {
+      const body = this.bodyMap.get(cfg.id)
+
+      if (!cfg.parent) {
+        // Central body stays at origin
+        body.pos = new Vector(0, 0)
+        body.vel = new Vector(0, 0)
+        continue
+      }
+
+      const parent = this.bodyMap.get(cfg.parent)
+      if (!parent) {
+        // Orphan body, place at origin
+        body.pos = new Vector(0, 0)
+        body.vel = new Vector(0, 0)
+        continue
+      }
+
+      const r      = cfg.orbitRadius
+      const angle  = cfg.startAngle ?? 0
+
+      // Position relative to parent
+      body.pos = new Vector(
+        parent.pos.x + r * Math.cos(angle),
+        parent.pos.y + r * Math.sin(angle)
+      )
+
+      // Circular-orbit speed around parent:  v = sqrt(G * M_parent / r)
+      const speed = Math.sqrt(G * parent.mass / r)
+      const dir   = cfg.retrograde ? 1 : -1   // -1 = counter-clockwise (prograde)
+
+      body.vel = new Vector(
+        parent.vel.x + speed * dir * Math.sin(angle),
+        parent.vel.y + speed * (-dir) * Math.cos(angle)
+      )
+    }
+  }
 }

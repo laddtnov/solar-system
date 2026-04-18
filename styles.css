@@ -86,6 +86,62 @@ body {
   box-shadow: 0 0 10px #00ff00;
 }
 
+/* ── Scene Switcher ──────────────────────────────────────────────────────── */
+
+#scene-switcher {
+  position: fixed;
+  top: 80px;
+  left: 15px;
+  z-index: 10000;
+  display: flex;
+  gap: 5px;
+}
+
+#scene-switcher .scene-btn {
+  background: transparent;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+#scene-switcher .scene-btn:hover {
+  background: rgba(0, 255, 0, 0.2);
+  box-shadow: 0 0 10px #00ff00;
+}
+
+#scene-switcher .scene-btn.active {
+  background: #00ff00;
+  color: #000;
+  box-shadow: 0 0 15px #00ff00;
+}
+
+/* ── Scene Backgrounds ──────────────────────────────────────────────────── */
+
+.bg-nebula {
+  background: radial-gradient(ellipse at 20% 80%, rgba(138, 43, 226, 0.3) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 20%, rgba(75, 0, 130, 0.2) 0%, transparent 50%),
+              radial-gradient(circle at center, #0a0a1a 0%, #000005 100%);
+}
+
+.bg-deep {
+  background: radial-gradient(circle at 30% 70%, rgba(25, 25, 112, 0.2) 0%, transparent 40%),
+              radial-gradient(circle at 70% 30%, rgba(72, 61, 139, 0.15) 0%, transparent 40%),
+              radial-gradient(circle at center, #050510 0%, #000000 100%);
+}
+
+.bg-stars {
+  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+}
+
 /* ── Command Center ─────────────────────────────────────────────────────── */
 
 #command-center {
@@ -920,5 +976,190 @@ body {
   }
   .terminal-line:nth-child(4) {
     font-size: 22px;
+  }
+}
+
+/* ── Scene-Specific Body Styles ─────────────────────────────────────────── */
+
+/* Scene body base */
+.scene-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.scene-body:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Sirius A - Blue-white main sequence star */
+.sirius-a {
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle at 30% 30%, #e0f0ff, #aaccff 40%, #7799cc 100%);
+  box-shadow:
+    0 0 60px rgba(170, 204, 255, 0.8),
+    0 0 120px rgba(170, 204, 255, 0.4),
+    inset -10px -10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Sirius B - White dwarf (small, hot, dense) */
+.sirius-b {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #f0f0f0 50%, #dddddd 100%);
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.9),
+    0 0 40px rgba(255, 255, 255, 0.5),
+    0 0 60px rgba(255, 255, 255, 0.3);
+}
+
+/* Vela Pulsar - Rotating neutron star with beams */
+.vela-pulsar {
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle at 40% 40%, #88ccff, #44aaff 50%, #2288cc 100%);
+  box-shadow:
+    0 0 30px rgba(68, 170, 255, 0.8),
+    0 0 60px rgba(68, 170, 255, 0.4);
+  animation: pulse 0.0893s infinite;
+}
+
+.vela-pulsar::before,
+.vela-pulsar::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, rgba(68, 170, 255, 0.8), transparent);
+  transform-origin: center;
+  animation: pulsarBeam 0.0893s infinite;
+}
+
+.vela-pulsar::before {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.vela-pulsar::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+    box-shadow: 0 0 30px rgba(68, 170, 255, 0.8), 0 0 60px rgba(68, 170, 255, 0.4);
+  }
+  50% { 
+    opacity: 0.7; 
+    box-shadow: 0 0 50px rgba(68, 170, 255, 1), 0 0 100px rgba(68, 170, 255, 0.6);
+  }
+}
+
+@keyframes pulsarBeam {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Sagittarius A* - Supermassive black hole with accretion disk */
+.sagittarius-a {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #000000 30%, #1a0500 50%, #330a00 100%);
+  box-shadow:
+    0 0 0 2px rgba(255, 100, 0, 0.3),
+    0 0 0 10px rgba(255, 100, 0, 0.1),
+    inset 0 0 40px rgba(255, 50, 0, 0.2);
+}
+
+.sagittarius-a .accretion-disk {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    rgba(255, 150, 50, 0.1),
+    rgba(255, 100, 0, 0.3),
+    rgba(255, 80, 0, 0.4),
+    rgba(255, 150, 50, 0.1),
+    transparent
+  );
+  animation: diskRotate 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes diskRotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* TRAPPIST-1 - Red dwarf star */
+.trappist-1 {
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle at 30% 30%, #ffaa88, #ff6644 40%, #cc4422 100%);
+  box-shadow:
+    0 0 40px rgba(255, 100, 68, 0.8),
+    0 0 80px rgba(255, 100, 68, 0.4),
+    inset -8px -8px 16px rgba(0, 0, 0, 0.3);
+  animation: redDwarfGlow 4s ease-in-out infinite;
+}
+
+@keyframes redDwarfGlow {
+  0%, 100% { 
+    box-shadow: 0 0 40px rgba(255, 100, 68, 0.8), 0 0 80px rgba(255, 100, 68, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 50px rgba(255, 100, 68, 1), 0 0 100px rgba(255, 100, 68, 0.6);
+  }
+}
+
+/* TRAPPIST-1b - Hot rocky planet */
+.trappist-1b {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #ddaa88, #cc8866 50%, #aa6644 100%);
+  box-shadow: 0 0 10px rgba(204, 136, 102, 0.5);
+}
+
+/* TRAPPIST-1e - Potentially habitable (greenish) */
+.trappist-1e {
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle at 30% 30%, #88ccaa, #66aa88 50%, #448866 100%);
+  box-shadow: 0 0 10px rgba(102, 170, 136, 0.5);
+}
+
+/* TRAPPIST-1f - Water world (blue) */
+.trappist-1f {
+  width: 17px;
+  height: 17px;
+  background: radial-gradient(circle at 30% 30%, #88aadd, #6688cc 50%, #4466aa 100%);
+  box-shadow: 0 0 10px rgba(102, 136, 204, 0.5);
+}
+
+/* Scene switcher mobile responsive */
+@media (max-width: 768px) {
+  #scene-switcher {
+    top: auto;
+    bottom: 180px;
+    left: 15px;
+  }
+  
+  #scene-switcher .scene-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
   }
 }
