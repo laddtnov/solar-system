@@ -1136,12 +1136,44 @@ body {
   box-shadow: 0 0 10px rgba(102, 170, 136, 0.5);
 }
 
+/* TRAPPIST-1c - Hot rocky Venus-like */
+.trappist-1c {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #ffbb88, #dd9966 50%, #bb7744 100%);
+  box-shadow: 0 0 10px rgba(221, 153, 102, 0.5);
+}
+
+/* TRAPPIST-1d - Small dry rocky world */
+.trappist-1d {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 30% 30%, #ccddaa, #aabb88 50%, #889966 100%);
+  box-shadow: 0 0 8px rgba(170, 187, 136, 0.5);
+}
+
 /* TRAPPIST-1f - Water world (blue) */
 .trappist-1f {
   width: 17px;
   height: 17px;
   background: radial-gradient(circle at 30% 30%, #88aadd, #6688cc 50%, #4466aa 100%);
   box-shadow: 0 0 10px rgba(102, 136, 204, 0.5);
+}
+
+/* TRAPPIST-1g - Outer large rocky world (pale blue-green) */
+.trappist-1g {
+  width: 19px;
+  height: 19px;
+  background: radial-gradient(circle at 30% 30%, #aaccdd, #88aabb 50%, #668899 100%);
+  box-shadow: 0 0 10px rgba(136, 170, 187, 0.5);
+}
+
+/* TRAPPIST-1h - Outermost icy world */
+.trappist-1h {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 30% 30%, #ddeeff, #c0d8ee 50%, #99bbcc 100%);
+  box-shadow: 0 0 8px rgba(192, 216, 238, 0.6);
 }
 
 /* Scene switcher — vertical stack */
