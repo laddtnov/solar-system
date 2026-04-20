@@ -51,6 +51,9 @@ export class SceneManager {
         case '8':
           this.switchScene('whitedwarfs')
           break
+        case '9':
+          this.switchScene('reddwarfs')
+          break
       }
     })
   }

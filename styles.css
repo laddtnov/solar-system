@@ -1014,6 +1014,73 @@ body {
     0 0 60px rgba(255, 255, 255, 0.3);
 }
 
+/* ── Red Dwarfs scene ────────────────────────────────────── */
+
+/* Proxima Centauri - nearest star, M5.5 ultra-cool red dwarf */
+.proxima-centauri {
+  width: 36px;
+  height: 36px;
+  background: radial-gradient(circle at 30% 30%, #ff8866, #ff4422 45%, #cc2200 100%);
+  box-shadow:
+    0 0 30px rgba(255, 68, 34, 0.8),
+    0 0 70px rgba(255, 68, 34, 0.4),
+    inset -4px -4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Proxima b - rocky, potentially habitable (muted blue-grey) */
+.proxima-b {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 30% 30%, #99bbcc, #6699aa 50%, #446688 100%);
+  box-shadow: 0 0 10px rgba(102, 153, 170, 0.6);
+}
+
+/* Proxima c - cold super-Earth (deep blue) */
+.proxima-c {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 30% 30%, #8899cc, #5577aa 50%, #334488 100%);
+  box-shadow: 0 0 10px rgba(85, 119, 170, 0.5);
+}
+
+/* Proxima d - tiny sub-Earth (warm rocky, inner orbit) */
+.proxima-d {
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle at 30% 30%, #ddaa88, #cc8855 50%, #aa6633 100%);
+  box-shadow: 0 0 6px rgba(204, 136, 85, 0.6);
+}
+
+/* Barnard's Star - M4 red dwarf, slightly smaller than Proxima */
+.barnard-star {
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle at 30% 30%, #ff7755, #ff3300 45%, #aa1100 100%);
+  box-shadow:
+    0 0 24px rgba(255, 51, 0, 0.8),
+    0 0 55px rgba(255, 51, 0, 0.35),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Barnard's Star b - cold dark super-Earth candidate */
+.barnard-planet {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #889aaa, #557788 50%, #334455 100%);
+  box-shadow: 0 0 8px rgba(85, 119, 136, 0.5);
+}
+
+/* Wolf 359 - M6 ultra-cool, smallest of the three, deep crimson */
+.wolf-359 {
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle at 30% 30%, #ff5533, #cc2200 45%, #881100 100%);
+  box-shadow:
+    0 0 18px rgba(204, 34, 0, 0.8),
+    0 0 42px rgba(204, 34, 0, 0.35),
+    inset -3px -3px 8px rgba(0, 0, 0, 0.5);
+}
+
 /* ── White Dwarfs scene ───────────────────────────────────── */
 
 /* 40 Eridani A - K-type orange dwarf */
