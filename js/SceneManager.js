@@ -54,6 +54,9 @@ export class SceneManager {
         case '9':
           this.switchScene('reddwarfs')
           break
+        case '0':
+          this.switchScene('kuiperbelt')
+          break
       }
     })
   }
@@ -128,6 +131,9 @@ export class SceneManager {
     // Asteroid belt is CSS-only (no data-body) — hide it here, restore in solar only
     const belt = document.querySelector('.asteroid-belt')
     if (belt) belt.style.display = 'none'
+    // Kuiper belt ring — hide here, restore in kuiperbelt scene only
+    const kuiper = document.querySelector('.kuiper-belt-ring')
+    if (kuiper) kuiper.style.display = 'none'
   }
 
   /**
@@ -163,6 +169,9 @@ export class SceneManager {
     // Restore asteroid belt only for the solar scene
     const belt = document.querySelector('.asteroid-belt')
     if (belt) belt.style.display = scene.id === 'solar' ? '' : 'none'
+    // Restore Kuiper belt ring only for the kuiperbelt scene
+    const kuiper = document.querySelector('.kuiper-belt-ring')
+    if (kuiper) kuiper.style.display = scene.id === 'kuiperbelt' ? '' : 'none'
 
     // Build bodies using Simulation's method for proper position/velocity calculation
     if (this.simulation && configs.length > 0) {

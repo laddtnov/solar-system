@@ -1014,6 +1014,111 @@ body {
     0 0 60px rgba(255, 255, 255, 0.3);
 }
 
+/* ── Kuiper Belt scene ───────────────────────────────────── */
+
+/* Kuiper Belt ring — sparse icy particles around center */
+.kuiper-belt-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  /* Sparse ring of dots at ~195px, scattered ±40px */
+  box-shadow:
+    191px 0 0 1px rgba(180,200,220,0.35),
+    -193px 2px 0 1px rgba(180,200,220,0.25),
+    0 195px 0 1px rgba(180,200,220,0.3),
+    1px -192px 0 1px rgba(180,200,220,0.25),
+    136px 140px 0 1px rgba(180,200,220,0.3),
+    -138px -143px 0 1px rgba(180,200,220,0.2),
+    -140px 138px 0 1px rgba(180,200,220,0.25),
+    143px -135px 0 1px rgba(180,200,220,0.3),
+    185px 55px 0 1px rgba(180,200,220,0.2),
+    -188px -52px 0 1px rgba(180,200,220,0.25),
+    55px 188px 0 1px rgba(180,200,220,0.3),
+    -57px -186px 0 1px rgba(180,200,220,0.2),
+    175px -85px 0 1px rgba(180,200,220,0.25),
+    -177px 83px 0 1px rgba(180,200,220,0.2),
+    85px -178px 0 1px rgba(180,200,220,0.3),
+    -83px 180px 0 1px rgba(180,200,220,0.25),
+    200px 20px 0 1px rgba(180,200,220,0.2),
+    -198px -22px 0 1px rgba(180,200,220,0.15),
+    22px 199px 0 1px rgba(180,200,220,0.2),
+    -24px -200px 0 1px rgba(180,200,220,0.25),
+    160px 108px 0 1px rgba(180,200,220,0.2),
+    -162px -106px 0 1px rgba(180,200,220,0.15),
+    -108px 162px 0 1px rgba(180,200,220,0.2),
+    110px -160px 0 1px rgba(180,200,220,0.25);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Dim Sun reference in Kuiper Belt scene */
+.kuiper-sun {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 35% 35%, #fff5cc, #ffcc44 50%, #cc9900 100%);
+  box-shadow:
+    0 0 15px rgba(255, 204, 68, 0.6),
+    0 0 35px rgba(255, 204, 68, 0.3);
+}
+
+/* Pluto (Kuiper Belt variant) */
+.pluto-kb {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 30% 30%, #e0cdb0, #c4a882 50%, #a08860 100%);
+  box-shadow: 0 0 8px rgba(196, 168, 130, 0.5);
+}
+
+/* Charon (Kuiper Belt variant — slightly blue-grey) */
+.charon-kb {
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle at 30% 30%, #c0c0cc, #a0a0b0 50%, #808090 100%);
+  box-shadow: 0 0 6px rgba(160, 160, 176, 0.4);
+}
+
+/* Haumea — bright white, slightly elongated appearance */
+.haumea {
+  width: 18px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #e8e0cc 50%, #ccbba0 100%);
+  box-shadow:
+    0 0 10px rgba(232, 224, 204, 0.6),
+    0 0 22px rgba(232, 224, 204, 0.3);
+}
+
+/* Makemake — reddish-brown methane ice surface */
+.makemake {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 30% 30%, #ddaa88, #c08060 50%, #9a5c3a 100%);
+  box-shadow: 0 0 8px rgba(192, 128, 96, 0.5);
+}
+
+/* Eris — bright greyish-white (methane frost) */
+.eris {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #f0ece4, #d8d0c8 50%, #b8b0a8 100%);
+  box-shadow:
+    0 0 10px rgba(216, 208, 200, 0.6),
+    0 0 22px rgba(216, 208, 200, 0.3);
+}
+
+/* Sedna — deep crimson, most distant */
+.sedna {
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 30% 30%, #ee7755, #cc4422 50%, #992200 100%);
+  box-shadow:
+    0 0 10px rgba(204, 68, 34, 0.6),
+    0 0 22px rgba(204, 68, 34, 0.3);
+}
+
 /* ── Red Dwarfs scene ────────────────────────────────────── */
 
 /* Proxima Centauri - nearest star, M5.5 ultra-cool red dwarf */
