@@ -1,112 +1,94 @@
-# Universe Simulation Roadmap (30 Days)
+# Universe Simulation — Roadmap
 
-This roadmap turns the project into an interactive "book + simulation" platform while keeping the current solar system stable.
+## Already Shipped
 
-## Guiding Rules
+- Solar System scene with full physics (gravity, orbital mechanics)
+- 11 scenes: Solar, Stellar Remnants, Exoplanets (TRAPPIST-1), Black Holes, Supergiants, Neutron Stars, Galaxies, White Dwarfs, Red Dwarfs, Kuiper Belt, Spacecraft Trajectories
+- Date-based real planetary position calculator
+- Planet/body comparison tool (key C)
+- EventBus, SceneManager, DataService, Comparator modules
+- Sound system (Web Audio API), typewriter UI, trail canvas
 
-- Keep the app playable offline first.
-- Use trusted scientific sources only.
-- Use local snapshots as fallback when internet sync fails.
-- Add features in small slices so every week ships something visible.
+---
 
-## Phase 1 (Days 1-7): Data Foundation + Roadmap Lock
+## Next Up
 
-Goal: prepare a reliable data layer without breaking current simulation behavior.
+### 1. Real NASA / Hubble / JWST Textures
 
-1. Add a `DataService` module:
-   - loads local snapshot data
-   - reads/writes cached synced data
-   - emits status events (`data:ready`, `data:sync:start`, `data:sync:done`, `data:sync:error`)
-2. Keep `planetData` as default fallback.
-3. Add first source adapter:
-   - NASA Exoplanet Archive summary endpoint/query
-4. Add metadata fields to synced payload:
-   - `source`
-   - `sourceUrl`
-   - `syncedAt`
-   - `version`
-5. Add terminal-level sync trigger (next phase wiring):
-   - command target: `sync data`
+Replace CSS gradient bodies with actual photographs. All sources are public domain (NASA) or free for educational use (ESA/ESO/EHT).
 
-Deliverable:
-- Data layer exists and can sync without breaking the current UI.
+**Solar System planets**
+- Sun — SOHO/SDO solar disk
+- Mercury, Venus, Mars — Mariner/MRO
+- Earth — Blue Marble (Apollo/DSCOVR)
+- Jupiter — Juno closeup
+- Saturn — Cassini with rings visible
+- Uranus, Neptune — Voyager 2
+- Moon — LRO
+- Pluto — New Horizons heart photo
 
-## Phase 2 (Days 8-14): Command Center + Interactivity
+**Deep sky scenes**
+- Black holes — M87* EHT image (2019), Sgr A* (2022)
+- Galaxies — Andromeda (Hubble), JWST deep field
+- Neutron stars — Crab Nebula pulsar (Chandra X-ray)
+- Supergiant — Betelgeuse surface (ALMA/VLTI)
+- White dwarfs — Sirius B (Hubble)
+- Red dwarfs — Proxima Centauri (Hubble)
+- Kuiper Belt — Pluto surface detail (New Horizons)
 
-Goal: make users actively operate the simulation.
+**Implementation:** CSS `background-image` + `background-size: cover` + `border-radius: 50%` on existing planet divs. No simulation changes needed. Store images in `/assets/textures/`.
 
-1. Add `EventBus` usage across modules (`ui`, `simulation`, `data`, `audio`).
-2. Add terminal commands:
-   - `help`
-   - `focus <body>`
-   - `speed <1|10|50|200>`
-   - `pause`
-   - `resume`
-   - `trails <on|off>`
-   - `sync data`
-3. Add "Focus Mode" camera:
-   - smooth center on selected body
-   - smooth zoom presets
-4. Save session preferences:
-   - speed
-   - selected body
-   - sound
-   - trails
+---
 
-Deliverable:
-- User can control the universe through commands, not only clicking.
+### 2. Kuiper Belt + Spacecraft as Solar System Layers
 
-## Phase 3 (Days 15-21): Universe Book Mode (MVP)
+Move Kuiper Belt objects and Spacecraft trajectories into the main Solar System scene as **toggleable overlays** — because they are literally part of our solar system.
 
-Goal: convert the project into a narrative learning experience.
+- Press `K` → toggle Kuiper Belt objects (Pluto, Eris, Makemake, Haumea, Sedna) at scaled positions
+- Press `V` → toggle Spacecraft trajectory lines (Voyager 1/2, New Horizons, Pioneer 10/11) — animated dashed lines radiating outward
+- Dedicated `kuiperbelt` and `spacecraft` scenes remain for focused deep-dive mode
+- Solar scene becomes the true hub
 
-1. Add chapter engine:
-   - chapter title
-   - story blocks
-   - interactive mission steps
-2. Initial chapters:
-   - Birth of the Solar System
-   - Life Cycle of Stars
-   - Stellar Remnants (white dwarf, neutron star, black hole)
-3. Add progress persistence:
-   - current chapter
-   - completed missions
-4. Add "mission feedback" panel in terminal style.
+---
 
-Deliverable:
-- First playable educational chapter flow.
+### 3. Time Controls
 
-## Phase 4 (Days 22-30): Deep Space Expansion
+Every serious orrery has playback control. Currently there is no way to pause or change speed without the terminal.
 
-Goal: introduce new object classes and multi-scene structure.
+- `Space` → pause / resume
+- Speed slider in the HUD: `0.1×` `1×` `10×` `50×` `200×`
+- Current speed indicator always visible
+- Time direction toggle (run backwards)
 
-1. Add `SceneManager`:
-   - Solar System scene
-   - Stellar Remnants Lab scene
-   - Exoplanet Systems scene (starter)
-2. Add object presets:
-   - white dwarf
-   - neutron star
-   - black hole
-3. Add source adapters (read-only sync):
-   - GWOSC (compact-object merger events)
-   - ATNF Pulsar Catalogue metadata links
-   - NED/SIMBAD references for object cards
-4. Add source attribution in each data card.
+---
 
-Deliverable:
-- Multi-scene universe with trusted source-backed metadata.
+### 4. Responsive Canvas
 
-## Quality Checklist (Every Phase)
+The fixed `1200×1200px .space` container breaks on small screens. Scale it to `min(100vw, 100vh)` so the simulation fills any screen correctly.
 
-1. No feature ships without fallback behavior.
-2. Every new module is ES module based.
-3. No inline event handlers in HTML for new features.
-4. Terminal theme remains monochrome green first.
-5. Performance remains smooth on mobile.
+---
 
-## Immediate Next 3 Tasks
+### 5. Scale Toggle
 
-1. Implement `DataService` foundation.
-2. Wire app bootstrap to expose data sync state.
-3. Add first sync command entry point in terminal workflow.
+- `S` key → switch between **Visual scale** (current — bodies enlarged to be visible) and **Realistic scale** (true proportions — shows how empty space really is)
+- Dramatic effect: at realistic scale the planets nearly disappear against the Sun
+
+---
+
+### 6. URL Hash State
+
+Make scenes shareable/linkable:
+- `index.html#solar`, `index.html#blackholes`, `index.html#kuiperbelt`
+- On load, read hash and switch to that scene automatically
+- Update hash on every scene switch
+
+---
+
+## Priority Order
+
+1. **Real textures** — biggest visual impact, least code change
+2. **Kuiper Belt + Spacecraft layers** — makes solar scene feel complete
+3. **Time controls** — the #1 missing simulation feature
+4. Responsive canvas
+5. Scale toggle
+6. URL hash state
