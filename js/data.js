@@ -836,6 +836,103 @@ export const planetData = {
       "Dominant galaxy of the Virgo Supercluster"
     ]
   },
+  // ── White Dwarfs ──
+  fortyEridaniA: {
+    name: "40 ERIDANI A",
+    symbol: "\u2609",
+    subtitle: "K-Type Main Sequence Star",
+    info: "Orange dwarf star — home to Spock's planet Vulcan in Star Trek lore",
+    distance: "16.3 light-years",
+    diameter: "985,000 km (0.71x Sun)",
+    period: "\u2014",
+    dayLength: "~43 Earth days",
+    temperature: "5,100\u00b0C (surface)",
+    gravity: "0.78g (surface)",
+    moons: 0,
+    atmosphere: "Hydrogen, helium",
+    facts: [
+      "Part of a triple star system with 40 Eri B and C",
+      "Star Trek: Vulcan (Spock's home) was set here",
+      "Slightly smaller and cooler than our Sun",
+      "K-dwarf stars live up to 20 billion years",
+      "40 Eridani B was the first white dwarf discovered (1910)",
+      "Located in the constellation Eridanus",
+      "One of the closest multiple-star systems to Earth",
+      "K-type stars are prime targets in the search for life"
+    ]
+  },
+  fortyEridaniB: {
+    name: "40 ERIDANI B",
+    symbol: "\u2609",
+    subtitle: "White Dwarf Star",
+    info: "First white dwarf identified — Earth-sized remnant of a dead star",
+    distance: "16.3 light-years",
+    diameter: "~12,700 km (0.99x Earth)",
+    period: "247.9 years (orbit around 40 Eri A)",
+    dayLength: "Unknown",
+    temperature: "16,500\u00b0C (surface)",
+    gravity: "~43,000g (surface)",
+    moons: 0,
+    atmosphere: "Pure hydrogen shell (DA white dwarf)",
+    facts: [
+      "First white dwarf ever identified — confirmed by W. Adams in 1914",
+      "Mass: 0.59 solar masses packed into an Earth-sized sphere",
+      "Orbited by 40 Eri C, a red dwarf, in a close pair",
+      "Will cool into a black dwarf over trillions of years",
+      "No ongoing nuclear fusion — pure gravitational compression heat",
+      "Surface gravity 43,000x stronger than Earth's",
+      "Spectral type DA — hydrogen atmosphere, no metal lines",
+      "Astronomers use it to calibrate white dwarf cooling models"
+    ]
+  },
+  procyonA: {
+    name: "PROCYON A",
+    symbol: "\u2609",
+    subtitle: "F-Type Subgiant Star",
+    info: "8th brightest star in the sky — slightly evolved yellow-white star",
+    distance: "11.5 light-years",
+    diameter: "2,050,000 km (1.48x Sun)",
+    period: "\u2014",
+    dayLength: "~23 Earth days",
+    temperature: "6,530\u00b0C (surface)",
+    gravity: "2.0g (surface)",
+    moons: 0,
+    atmosphere: "Hydrogen, helium",
+    facts: [
+      "8th brightest star in the night sky",
+      "Greek: 'before the dog' \u2014 rises just before Sirius",
+      "Slightly evolved off the main sequence, becoming a subgiant",
+      "Will expand into a red giant in ~10 million years",
+      "Companion Procyon B orbits it once every 40.8 years",
+      "Located in the constellation Canis Minor",
+      "One of the Sun's nearest stellar neighbors at 11.5 ly",
+      "Visible from nearly every point on Earth"
+    ]
+  },
+  procyonB: {
+    name: "PROCYON B",
+    symbol: "\u2609",
+    subtitle: "White Dwarf Star",
+    info: "Cool, dim white dwarf hidden in the glare of bright Procyon A",
+    distance: "11.5 light-years",
+    diameter: "~9,000 km (0.71x Earth)",
+    period: "40.8 years (orbit around Procyon A)",
+    dayLength: "Unknown",
+    temperature: "7,740\u00b0C (surface)",
+    gravity: "~200,000g (surface)",
+    moons: 0,
+    atmosphere: "Hydrogen (DQZ spectral type — carbon and metals detected)",
+    facts: [
+      "One of the nearest white dwarfs to Earth",
+      "Its existence was predicted from Procyon A's wobble in 1844",
+      "Finally directly observed in 1896 by John Schaeberle",
+      "Mass: 0.6 solar masses in a sphere smaller than Earth",
+      "One of the coolest white dwarfs studied in detail",
+      "Has detectable carbon and metals from accreted material",
+      "Orbit brings it as close as 8.9 AU and as far as 21 AU from Procyon A",
+      "Procyon A's gravity keeps it in a stable 40.8-year orbit"
+    ]
+  },
 }
 
 // ── Physics configuration ────────────────────────────────────────────────────
@@ -1140,6 +1237,15 @@ export const scenes = {
     description: 'Island universes across the cosmos',
     bodyIds: ['milkyWayGal', 'andromedaGal', 'largeMagellanicCloud', 'm87Galaxy'],
     backgroundType: 'galaxy',
+    scale: 1,
+  },
+  whitedwarfs: {
+    id: 'whitedwarfs',
+    name: 'White Dwarfs',
+    icon: '\u25CB',
+    description: 'Stellar remnants — dead stars cooling for eternity',
+    bodyIds: ['siriusA', 'siriusB', 'fortyEridaniA', 'fortyEridaniB', 'procyonA', 'procyonB'],
+    backgroundType: 'deep',
     scale: 1,
   },
 }
@@ -1495,5 +1601,58 @@ export const sceneBodyConfigs = {
     color: '#ffcc88',
     trailMax: 0,
     sceneType: 'galaxies',
+  },
+
+  // ── White Dwarfs scene ────────────────────────────────────────────────────
+  // siriusA and siriusB configs are reused from stellar scene (same ids)
+  fortyEridaniA: {
+    id: 'fortyEridaniA',
+    mass: 12000,
+    radius: 35,
+    orbitRadius: 0,
+    parent: null,
+    startX: 220,
+    startY: -150,
+    domSelector: '.forty-eridani-a',
+    color: '#ffaa66',
+    trailMax: 0,
+    sceneType: 'whitedwarfs',
+  },
+  fortyEridaniB: {
+    id: 'fortyEridaniB',
+    mass: 0.01,
+    radius: 6,
+    orbitRadius: 100,
+    parent: 'fortyEridaniA',
+    startAngle: Math.PI * 0.7,
+    domSelector: '.forty-eridani-b',
+    color: '#ffffff',
+    trailMax: 350,
+    sceneType: 'whitedwarfs',
+  },
+  procyonA: {
+    id: 'procyonA',
+    mass: 15000,
+    radius: 40,
+    orbitRadius: 0,
+    parent: null,
+    startX: 100,
+    startY: 200,
+    domSelector: '.procyon-a',
+    color: '#ffeebb',
+    trailMax: 0,
+    sceneType: 'whitedwarfs',
+  },
+  procyonB: {
+    id: 'procyonB',
+    mass: 0.01,
+    radius: 5,
+    orbitRadius: 85,
+    parent: 'procyonA',
+    startAngle: Math.PI * 1.4,
+    domSelector: '.procyon-b',
+    color: '#f0f0f0',
+    trailMax: 300,
+    sceneType: 'whitedwarfs',
   },
 }

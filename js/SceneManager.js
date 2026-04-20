@@ -48,6 +48,9 @@ export class SceneManager {
         case '7':
           this.switchScene('galaxies')
           break
+        case '8':
+          this.switchScene('whitedwarfs')
+          break
       }
     })
   }
