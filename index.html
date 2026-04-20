@@ -36,6 +36,30 @@
   <button onclick="window.__sim?.speedUp()">+</button>
 </div>
 
+<!-- Compare button -->
+<button id="compare-btn" title="Compare any two bodies [C]">&#x2696; COMPARE</button>
+
+<!-- Comparison Modal -->
+<div id="compare-modal" style="display:none">
+  <div id="compare-container">
+    <div id="compare-header">
+      <span>&#x2696; BODY COMPARISON TERMINAL</span>
+      <button id="compare-close">&#x2715;</button>
+    </div>
+    <div id="compare-columns">
+      <div class="compare-col">
+        <select class="compare-select" id="select-left"></select>
+        <div id="compare-card-left"></div>
+      </div>
+      <div id="compare-vs">VS</div>
+      <div class="compare-col">
+        <select class="compare-select" id="select-right"></select>
+        <div id="compare-card-right"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Scene Switcher -->
 <div id="scene-switcher">
   <button class="scene-btn active" data-scene="solar" title="Solar System [1]">&#x2609;</button>
