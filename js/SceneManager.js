@@ -57,6 +57,10 @@ export class SceneManager {
         case '0':
           this.switchScene('kuiperbelt')
           break
+        case 'q':
+        case 'Q':
+          this.switchScene('spacecraft')
+          break
       }
     })
   }

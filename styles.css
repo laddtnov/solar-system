@@ -1014,6 +1014,106 @@ body {
     0 0 60px rgba(255, 255, 255, 0.3);
 }
 
+/* ── Spacecraft Trajectories scene ──────────────────────── */
+
+/* Sun reference point — dim, small */
+.spacecraft-sun {
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle at 35% 35%, #fffacc, #ffcc44 50%, #cc9900 100%);
+  box-shadow:
+    0 0 16px rgba(255, 204, 68, 0.7),
+    0 0 40px rgba(255, 204, 68, 0.3);
+}
+
+/* Shared spacecraft style — small rectangle, not circular */
+.voyager-1,
+.voyager-2,
+.new-horizons,
+.pioneer-10,
+.pioneer-11 {
+  width: 10px;
+  height: 5px;
+  border-radius: 2px;
+  overflow: visible; /* so ::before trajectory line shows */
+}
+
+/* Trajectory line shared rules */
+.voyager-1::before,
+.voyager-2::before,
+.new-horizons::before,
+.pioneer-10::before,
+.pioneer-11::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 1px;
+  transform-origin: left center;
+  pointer-events: none;
+  animation: trajectoryPulse 4s ease-in-out infinite;
+}
+
+@keyframes trajectoryPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* Voyager 1 — blue, upper-right (310, -150), angle 154°, 344px */
+.voyager-1 {
+  background: #88aaff;
+  box-shadow: 0 0 10px rgba(136, 170, 255, 0.9), 0 0 22px rgba(136, 170, 255, 0.5);
+}
+.voyager-1::before {
+  width: 344px;
+  background: linear-gradient(to right, rgba(136, 170, 255, 0.7), transparent);
+  transform: translateY(-50%) rotate(154deg);
+}
+
+/* Voyager 2 — gold, lower-left (-210, 210), angle 315°, 297px */
+.voyager-2 {
+  background: #ffaa44;
+  box-shadow: 0 0 10px rgba(255, 170, 68, 0.9), 0 0 22px rgba(255, 170, 68, 0.5);
+}
+.voyager-2::before {
+  width: 297px;
+  background: linear-gradient(to right, rgba(255, 170, 68, 0.7), transparent);
+  transform: translateY(-50%) rotate(315deg);
+}
+
+/* New Horizons — teal, upper-center (110, -265), angle 113°, 287px */
+.new-horizons {
+  background: #44ccaa;
+  box-shadow: 0 0 10px rgba(68, 204, 170, 0.9), 0 0 22px rgba(68, 204, 170, 0.5);
+}
+.new-horizons::before {
+  width: 287px;
+  background: linear-gradient(to right, rgba(68, 204, 170, 0.7), transparent);
+  transform: translateY(-50%) rotate(113deg);
+}
+
+/* Pioneer 10 — yellow, upper-left (-260, -110), angle 23°, 282px */
+.pioneer-10 {
+  background: #ffee55;
+  box-shadow: 0 0 10px rgba(255, 238, 85, 0.9), 0 0 22px rgba(255, 238, 85, 0.5);
+}
+.pioneer-10::before {
+  width: 282px;
+  background: linear-gradient(to right, rgba(255, 238, 85, 0.7), transparent);
+  transform: translateY(-50%) rotate(23deg);
+}
+
+/* Pioneer 11 — purple, lower-center (-25, 270), angle 275°, 271px */
+.pioneer-11 {
+  background: #cc88ff;
+  box-shadow: 0 0 10px rgba(204, 136, 255, 0.9), 0 0 22px rgba(204, 136, 255, 0.5);
+}
+.pioneer-11::before {
+  width: 271px;
+  background: linear-gradient(to right, rgba(204, 136, 255, 0.7), transparent);
+  transform: translateY(-50%) rotate(275deg);
+}
+
 /* ── Kuiper Belt scene ───────────────────────────────────── */
 
 /* Kuiper Belt ring — sparse icy particles around center */
