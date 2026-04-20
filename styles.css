@@ -44,6 +44,100 @@ body {
   z-index: 5;
 }
 
+/* ── Date Calculator Panel ───────────────────────────────────────────────── */
+
+#date-panel {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 10, 0, 0.88);
+  border: 1px solid #00ff00;
+  box-shadow: 0 0 16px rgba(0, 255, 0, 0.25), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: 10px 16px;
+  z-index: 9999;
+  font-family: 'Courier New', monospace;
+  min-width: 360px;
+}
+
+#date-panel-title {
+  color: #00ff00;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px rgba(0, 255, 0, 0.6);
+  border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+}
+
+#date-panel-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#date-input {
+  background: rgba(0, 20, 0, 0.9);
+  border: 1px solid rgba(0, 255, 0, 0.4);
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  padding: 4px 8px;
+  outline: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+#date-input:focus {
+  border-color: #00ff00;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+}
+
+/* Style the date picker calendar icon */
+#date-input::-webkit-calendar-picker-indicator {
+  filter: invert(1) sepia(1) saturate(5) hue-rotate(90deg);
+  cursor: pointer;
+}
+
+#date-panel-btns {
+  display: flex;
+  gap: 6px;
+}
+
+#date-panel-btns button {
+  background: transparent;
+  border: 1px solid rgba(0, 255, 0, 0.5);
+  color: #00cc00;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+#date-panel-btns button:hover {
+  background: rgba(0, 255, 0, 0.12);
+  border-color: #00ff00;
+  color: #00ff00;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+}
+
+#date-live-btn {
+  border-color: rgba(0, 200, 255, 0.5) !important;
+  color: #00ccff !important;
+}
+
+#date-live-btn:hover {
+  background: rgba(0, 200, 255, 0.12) !important;
+  border-color: #00ccff !important;
+  color: #00ccff !important;
+  box-shadow: 0 0 8px rgba(0, 200, 255, 0.3) !important;
+}
+
 /* ── Speed HUD ───────────────────────────────────────────────────────────── */
 
 #speed-hud {

@@ -16,6 +16,20 @@
 
 <!-- Speed HUD -->
 <div id="speed-hud">1x</div>
+
+<!-- Date Calculator Panel (shown only in Solar System scene) -->
+<div id="date-panel" style="display:none">
+  <div id="date-panel-title">&#x1F4C5; PLANETARY DATE CALCULATOR</div>
+  <div id="date-panel-body">
+    <input type="date" id="date-input">
+    <div id="date-panel-btns">
+      <button id="date-go-btn">GO TO DATE</button>
+      <button id="date-today-btn">TODAY</button>
+      <button id="date-live-btn">LIVE MODE</button>
+    </div>
+  </div>
+</div>
+
 <div id="speed-controls">
   <button onclick="window.__sim?.speedDown()">&minus;</button>
   <button onclick="window.__sim?.togglePause()">&#9208;</button>

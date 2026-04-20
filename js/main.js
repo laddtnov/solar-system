@@ -40,6 +40,48 @@ bus?.on?.('scene:changed', ({ sceneId }) => {
   document.querySelectorAll('#scene-switcher .scene-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.scene === sceneId)
   })
+
+  // Show date panel only in solar scene
+  const datePanel = document.getElementById('date-panel')
+  if (datePanel) datePanel.style.display = sceneId === 'solar' ? 'flex' : 'none'
+
+  // Exit date mode when leaving solar scene
+  if (sceneId !== 'solar' && sim.dateMode) sim.resumeLiveMode()
+})
+
+// ── Date Calculator controls ─────────────────────────────────────────────
+const dateInput   = document.getElementById('date-input')
+const dateGoBtn   = document.getElementById('date-go-btn')
+const dateTodayBtn = document.getElementById('date-today-btn')
+const dateLiveBtn  = document.getElementById('date-live-btn')
+
+// Default date input to today
+if (dateInput) {
+  const today = new Date()
+  dateInput.value = today.toISOString().slice(0, 10)
+}
+
+dateGoBtn?.addEventListener('click', () => {
+  const date = new Date(dateInput.value + 'T12:00:00Z')
+  if (!isNaN(date)) sim.goToDate(date)
+})
+
+dateTodayBtn?.addEventListener('click', () => {
+  const today = new Date()
+  dateInput.value = today.toISOString().slice(0, 10)
+  sim.goToDate(today)
+})
+
+dateLiveBtn?.addEventListener('click', () => {
+  sim.resumeLiveMode()
+})
+
+// Also trigger on Enter key in date input
+dateInput?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const date = new Date(dateInput.value + 'T12:00:00Z')
+    if (!isNaN(date)) sim.goToDate(date)
+  }
 })
 
 // Expose for debugging and external controls

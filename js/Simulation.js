@@ -2,6 +2,7 @@ import { Vector } from './Vector.js'
 import { Body }   from './Body.js'
 import { step }   from './Gravity.js'
 import { G, bodyConfig } from './data.js'
+import { computeAllPositions, formatDate } from './DateCalculator.js'
 
 const SPEEDS     = [1, 10, 50, 200]
 const MIN_STEPS  = 4               // minimum sub-steps per frame
@@ -237,6 +238,45 @@ export class Simulation {
   togglePause() { this.paused = !this.paused; this._updateHUD() }
   pause() { if (!this.paused) { this.paused = true; this._updateHUD() } }
   resume() { if (this.paused) { this.paused = false; this._updateHUD() } }
+
+  // ── Date-Based Position Calculator ───────────────────────────────────────
+
+  /**
+   * Snap all solar system planets to their real heliocentric positions
+   * for the given date. Physics is paused; trails are cleared.
+   */
+  goToDate(date) {
+    const positions = computeAllPositions(date)
+
+    // Pause physics and freeze the snapshot
+    this.paused = true
+    this.dateMode = true
+
+    // Clear trails
+    this.ctx.clearRect(0, 0, 1200, 1200)
+    for (const b of this.bodies) b.trail = []
+
+    // Update planet positions, freeze velocities
+    for (const [id, pos] of Object.entries(positions)) {
+      const body = this.bodyMap.get(id)
+      if (!body || !pos) continue
+      body.pos = new Vector(pos.x, pos.y)
+      body.vel = new Vector(0, 0)
+    }
+
+    // Update HUD to show the date
+    const el = document.getElementById('speed-hud')
+    if (el) el.textContent = formatDate(date)
+  }
+
+  /**
+   * Exit date mode and resume live physics simulation.
+   */
+  resumeLiveMode() {
+    this.dateMode = false
+    this.paused = false
+    this._updateHUD()
+  }
 
   // ── Scene Management ─────────────────────────────────────────────────────
 
