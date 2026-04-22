@@ -4,6 +4,7 @@ import { EventBus } from './EventBus.js'
 import { DataService } from './services/DataService.js'
 import { SceneManager } from './SceneManager.js'
 import { initComparator } from './Comparator.js'
+import { initQuiz } from './Quiz.js'
 
 const bus = new EventBus()
 const dataService = new DataService({ bus })
@@ -24,6 +25,7 @@ const sceneManager = new SceneManager({
 initUI({ simulation: sim, bus, dataService, sceneManager })
 initStarParallax()
 initComparator()
+initQuiz()
 
 // Wire scene switcher buttons
 document.querySelectorAll('#scene-switcher .scene-btn').forEach(btn => {
