@@ -5,6 +5,7 @@ import { DataService } from './services/DataService.js'
 import { SceneManager } from './SceneManager.js'
 import { initComparator } from './Comparator.js'
 import { initQuiz } from './Quiz.js'
+import { initSolarOverlay, setOverlaySolar } from './SolarOverlay.js'
 
 const bus = new EventBus()
 const dataService = new DataService({ bus })
@@ -26,6 +27,7 @@ initUI({ simulation: sim, bus, dataService, sceneManager })
 initStarParallax()
 initComparator()
 initQuiz()
+initSolarOverlay(bus)
 
 // Wire scene switcher buttons
 document.querySelectorAll('#scene-switcher .scene-btn').forEach(btn => {

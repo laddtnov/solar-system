@@ -163,6 +163,55 @@ body {
   box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
 }
 
+/* ── Solar Overlay canvas ───────────────────────────────────────────────── */
+
+#overlay-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* ── Overlay HUD (K / V toggles) ────────────────────────────────────────── */
+
+#overlay-hud {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 9990;
+}
+
+.overlay-hud-btn {
+  background: rgba(0, 8, 0, 0.85);
+  border: 1px solid rgba(0, 255, 0, 0.25);
+  color: rgba(0, 204, 0, 0.5);
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.overlay-hud-btn:hover {
+  border-color: rgba(0, 255, 0, 0.5);
+  color: #00cc00;
+}
+
+.overlay-hud-btn.active {
+  border-color: #00ff00;
+  color: #00ff00;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+  background: rgba(0, 255, 0, 0.06);
+}
+
 /* ── Quiz Button ────────────────────────────────────────────────────────── */
 
 #quiz-btn {
