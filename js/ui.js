@@ -36,7 +36,7 @@ function toggleSound() {
   const btn = document.getElementById('sound-toggle')
   if (btn) {
     btn.innerHTML = soundEnabled ? '\ud83d\udd0a SOUND: ON' : '\ud83d\udd07 SOUND: OFF'
-    btn.style.color = soundEnabled ? '#00cc00' : '#666'
+    btn.style.color = soundEnabled ? '#33ff33' : '#666'
   }
 }
 
@@ -79,10 +79,10 @@ async function typeAllLines(container, lines, speed = 30) {
 
 const soundButtonCSS = `
 .sound-toggle-btn{position:absolute;top:50px;right:15px;background:transparent;
-border:2px solid #00cc00;color:#00cc00;font-family:'Courier New',monospace;
+border:2px solid #33ff33;color:#33ff33;font-family:'Courier New',monospace;
 font-size:11px;padding:5px 10px;cursor:pointer;transition:all .2s ease;
 z-index:25;font-weight:bold}
-.sound-toggle-btn:hover{background:#00cc00;color:#000;box-shadow:0 0 10px #00cc00}`
+.sound-toggle-btn:hover{background:#33ff33;color:#000;box-shadow:0 0 10px #33ff33}`
 
 if (!document.getElementById('sound-btn-styles')) {
   const s = document.createElement('style')
@@ -107,11 +107,11 @@ function positionTooltip(e, tooltip) {
 
 function buildTooltipHTML(item) {
   return `
-    <b style="color:#00cc00;font-size:18px">${item.name}</b>
+    <b style="color:#33ff33;font-size:18px">${item.name}</b>
     <div style="margin-top:5px;font-style:italic">${item.subtitle}</div>
-    <div style="font-size:11px;color:#00cc00;margin-top:5px">${item.info}</div>
-    ${item.distance === '0' ? '' : `<div style="color:#00cc00;margin-top:5px">\ud83d\udccd Distance: ${item.distance}</div>`}
-    <div style="font-size:10px;color:#00cc00;margin-top:8px;animation:blink 1s infinite">\u25ba CLICK TO ACCESS TERMINAL</div>`
+    <div style="font-size:11px;color:#33ff33;margin-top:5px">${item.info}</div>
+    ${item.distance === '0' ? '' : `<div style="color:#33ff33;margin-top:5px">\ud83d\udccd Distance: ${item.distance}</div>`}
+    <div style="font-size:10px;color:#33ff33;margin-top:8px;animation:blink 1s infinite">\u25ba CLICK TO ACCESS TERMINAL</div>`
 }
 
 function formatTimestamp(isoString) {
