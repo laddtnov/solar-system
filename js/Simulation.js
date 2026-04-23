@@ -4,7 +4,7 @@ import { step }   from './Gravity.js'
 import { G, bodyConfig } from './data.js'
 import { computeAllPositions, formatDate } from './DateCalculator.js'
 
-const SPEEDS     = [1, 10, 50, 200]
+const SPEEDS     = [0.1, 1, 10, 50, 200]
 const MIN_STEPS  = 4               // minimum sub-steps per frame
 const MAX_SUB_DT = 0.012           // max physics dt per sub-step (~1.4px for Mercury)
 const MOBILE_CAP = 150             // cap sub-steps on mobile for performance
@@ -17,9 +17,10 @@ export class Simulation {
     this.ctx       = trailCanvas.getContext('2d')
     this.bodies    = []
     this.bodyMap   = new Map()      // id → Body
-    this.speedIdx  = 0
-    this.timeScale = SPEEDS[0]
-    this.paused    = false
+    this.speedIdx      = 1
+    this.timeScale     = SPEEDS[1]
+    this.timeDirection = 1
+    this.paused        = false
     this.lastTime  = 0
     this.centerX   = 600            // half of 1200 .space
     this.centerY   = 600
@@ -103,7 +104,7 @@ export class Simulation {
     dt = Math.min(dt, MAX_DT)
 
     if (!this.paused && !document.hidden) {
-      const scaledDt = dt * this.timeScale
+      const scaledDt = dt * this.timeScale * this.timeDirection
 
       // Adaptive sub-stepping: more steps at higher speeds so fast
       // inner planets (Mercury v≈120 px/s) stay accurate.
@@ -141,6 +142,9 @@ export class Simulation {
   // ── Trail Canvas ─────────────────────────────────────────────────────────
 
   _sizeCanvas() {
+    const size  = Math.min(window.innerWidth, window.innerHeight)
+    const scale = Math.min(1, size / 1200)
+    document.documentElement.style.setProperty('--space-scale', scale)
     this.canvas.width  = 1200
     this.canvas.height = 1200
   }
@@ -210,10 +214,14 @@ export class Simulation {
         this.paused = !this.paused
         this._updateHUD()
       }
-      // Speed presets: Shift+1..4
+      if (e.key === 'r' || e.key === 'R') {
+        this.timeDirection *= -1
+        this._updateHUD()
+      }
+      // Speed presets: Shift+1..5
       if (e.shiftKey) {
         const num = parseInt(e.key)
-        if (num >= 1 && num <= 4) {
+        if (num >= 1 && num <= 5) {
           this.speedIdx = num - 1
           this.timeScale = SPEEDS[this.speedIdx]
           this._updateHUD()
@@ -223,21 +231,34 @@ export class Simulation {
   }
 
   _updateHUD() {
-    const el = document.getElementById('speed-hud')
-    if (!el) return
-    if (this.paused) {
-      el.textContent = 'PAUSED'
-    } else {
-      el.textContent = `${this.timeScale}x`
+    const hud = document.getElementById('speed-hud')
+    if (hud) {
+      if (this.paused) {
+        hud.textContent = 'PAUSED'
+      } else {
+        const arrow = this.timeDirection < 0 ? '◀ ' : ''
+        hud.textContent = `${arrow}${this.timeScale}×`
+      }
     }
+
+    const slider = document.getElementById('speed-slider')
+    if (slider) slider.value = this.speedIdx
+
+    const btnPause = document.getElementById('btn-pause')
+    if (btnPause) btnPause.classList.toggle('active', this.paused)
+
+    const btnReverse = document.getElementById('btn-reverse')
+    if (btnReverse) btnReverse.classList.toggle('active', this.timeDirection < 0)
   }
 
-  /** Expose for mobile UI buttons */
-  speedUp()   { this.speedIdx = Math.min(this.speedIdx + 1, SPEEDS.length - 1); this.timeScale = SPEEDS[this.speedIdx]; this._updateHUD() }
-  speedDown() { this.speedIdx = Math.max(this.speedIdx - 1, 0); this.timeScale = SPEEDS[this.speedIdx]; this._updateHUD() }
-  togglePause() { this.paused = !this.paused; this._updateHUD() }
-  pause() { if (!this.paused) { this.paused = true; this._updateHUD() } }
-  resume() { if (this.paused) { this.paused = false; this._updateHUD() } }
+  /** Expose for UI controls */
+  speedUp()         { this.speedIdx = Math.min(this.speedIdx + 1, SPEEDS.length - 1); this.timeScale = SPEEDS[this.speedIdx]; this._updateHUD() }
+  speedDown()       { this.speedIdx = Math.max(this.speedIdx - 1, 0); this.timeScale = SPEEDS[this.speedIdx]; this._updateHUD() }
+  setSpeedIdx(idx)  { this.speedIdx = Math.max(0, Math.min(idx, SPEEDS.length - 1)); this.timeScale = SPEEDS[this.speedIdx]; this._updateHUD() }
+  togglePause()     { this.paused = !this.paused; this._updateHUD() }
+  toggleDirection() { this.timeDirection *= -1; this._updateHUD() }
+  pause()  { if (!this.paused) { this.paused = true;  this._updateHUD() } }
+  resume() { if (this.paused)  { this.paused = false; this._updateHUD() } }
 
   // ── Date-Based Position Calculator ───────────────────────────────────────
 

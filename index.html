@@ -14,8 +14,19 @@
 <body>
 <canvas id="stars-bg"></canvas>
 
-<!-- Speed HUD -->
-<div id="speed-hud">1x</div>
+<!-- Time Controls Panel -->
+<div id="time-controls">
+  <div id="speed-hud">1×</div>
+  <div id="time-buttons">
+    <button id="btn-reverse" title="Reverse time [R]" onclick="window.__sim?.toggleDirection()">&#9664;</button>
+    <button id="btn-pause"   title="Pause / Resume [Space]" onclick="window.__sim?.togglePause()">&#9646;&#9646;</button>
+  </div>
+  <input type="range" id="speed-slider" min="0" max="4" step="1" value="1"
+         oninput="window.__sim?.setSpeedIdx(+this.value)">
+  <div id="speed-labels">
+    <span>0.1×</span><span>1×</span><span>10×</span><span>50×</span><span>200×</span>
+  </div>
+</div>
 
 <!-- Date Calculator Panel (shown only in Solar System scene) -->
 <div id="date-panel" style="display:none">
@@ -28,12 +39,6 @@
       <button id="date-live-btn">LIVE MODE</button>
     </div>
   </div>
-</div>
-
-<div id="speed-controls">
-  <button onclick="window.__sim?.speedDown()">&minus;</button>
-  <button onclick="window.__sim?.togglePause()">&#9208;</button>
-  <button onclick="window.__sim?.speedUp()">+</button>
 </div>
 
 <!-- Compare button -->
@@ -74,8 +79,6 @@
   <button class="scene-btn" data-scene="galaxies" title="Galaxies [7]">&#x229B;</button>
   <button class="scene-btn" data-scene="whitedwarfs" title="White Dwarfs [8]">&#x25CB;</button>
   <button class="scene-btn" data-scene="reddwarfs" title="Red Dwarfs [9]">&#x2736;</button>
-  <button class="scene-btn" data-scene="kuiperbelt" title="Kuiper Belt [0]">&#x25CC;</button>
-  <button class="scene-btn" data-scene="spacecraft" title="Spacecraft [Q]">&#x25B6;</button>
 </div>
 
 <div class="space">

@@ -41,7 +41,7 @@ document.querySelectorAll('#scene-switcher .scene-btn').forEach(btn => {
   })
 })
 
-// Listen for scene changes to update UI
+// Listen for scene changes to update UI and URL hash
 bus?.on?.('scene:changed', ({ sceneId }) => {
   document.querySelectorAll('#scene-switcher .scene-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.scene === sceneId)
@@ -53,7 +53,14 @@ bus?.on?.('scene:changed', ({ sceneId }) => {
 
   // Exit date mode when leaving solar scene
   if (sceneId !== 'solar' && sim.dateMode) sim.resumeLiveMode()
+
+  // Keep URL hash in sync
+  history.replaceState(null, '', `#${sceneId}`)
 })
+
+// On load, switch to scene from URL hash if present
+const hashScene = location.hash.slice(1)
+if (hashScene) sceneManager.switchScene(hashScene)
 
 // ── Date Calculator controls ─────────────────────────────────────────────
 const dateInput   = document.getElementById('date-input')

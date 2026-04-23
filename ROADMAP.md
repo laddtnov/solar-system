@@ -3,92 +3,71 @@
 ## Already Shipped
 
 - Solar System scene with full physics (gravity, orbital mechanics)
-- 11 scenes: Solar, Stellar Remnants, Exoplanets (TRAPPIST-1), Black Holes, Supergiants, Neutron Stars, Galaxies, White Dwarfs, Red Dwarfs, Kuiper Belt, Spacecraft Trajectories
+- 9 scenes: Solar, Stellar Remnants, Exoplanets (TRAPPIST-1), Black Holes, Supergiants, Neutron Stars, Galaxies, White Dwarfs, Red Dwarfs
+- Kuiper Belt + Spacecraft as Solar System overlays (K / V keys) — dedicated scenes removed
 - Date-based real planetary position calculator
 - Planet/body comparison tool (key C)
 - EventBus, SceneManager, DataService, Comparator modules
 - Sound system (Web Audio API), typewriter UI, trail canvas
+- Command center terminal removed (keyboard shortcuts cover all actions)
+- Daily space facts quiz (True/False, 10 facts/day, date-seeded, midnight countdown)
+- Real NASA/ESA/EHT photo textures — all planets + deep sky bodies
+- Time controls: Space=pause, R=reverse, slider 0.1×–200×
+- Responsive canvas: continuous CSS scale via `--space-scale` var
+- URL hash state: `#solar`, `#blackholes` etc. — shareable scene links
 
 ---
 
 ## Next Up
 
-### 1. Real NASA / Hubble / JWST Textures
+### 1. Cosmic Zoom
 
-Replace CSS gradient bodies with actual photographs. All sources are public domain (NASA) or free for educational use (ESA/ESO/EHT).
+Scroll wheel (or pinch on mobile) to zoom in/out of the `.space` container.
 
-**Solar System planets**
-- Sun — SOHO/SDO solar disk
-- Mercury, Venus, Mars — Mariner/MRO
-- Earth — Blue Marble (Apollo/DSCOVR)
-- Jupiter — Juno closeup
-- Saturn — Cassini with rings visible
-- Uranus, Neptune — Voyager 2
-- Moon — LRO
-- Pluto — New Horizons heart photo
-
-**Deep sky scenes**
-- Black holes — M87* EHT image (2019), Sgr A* (2022)
-- Galaxies — Andromeda (Hubble), JWST deep field
-- Neutron stars — Crab Nebula pulsar (Chandra X-ray)
-- Supergiant — Betelgeuse surface (ALMA/VLTI)
-- White dwarfs — Sirius B (Hubble)
-- Red dwarfs — Proxima Centauri (Hubble)
-- Kuiper Belt — Pluto surface detail (New Horizons)
-
-**Implementation:** CSS `background-image` + `background-size: cover` + `border-radius: 50%` on existing planet divs. No simulation changes needed. Store images in `/assets/textures/`.
+- Mouse wheel → scale up/down around cursor point
+- Zoom range: ~0.3× (whole system visible) to ~5× (inner planets fill screen)
+- Combine with time controls for a full orrery feel
 
 ---
 
-### 2. Kuiper Belt + Spacecraft as Solar System Layers
+### 2. Body Info Panel on Click
 
-Move Kuiper Belt objects and Spacecraft trajectories into the main Solar System scene as **toggleable overlays** — because they are literally part of our solar system.
+Click any planet, star, or body → side drawer slides in with real data.
 
-- Press `K` → toggle Kuiper Belt objects (Pluto, Eris, Makemake, Haumea, Sedna) at scaled positions
-- Press `V` → toggle Spacecraft trajectory lines (Voyager 1/2, New Horizons, Pioneer 10/11) — animated dashed lines radiating outward
-- Dedicated `kuiperbelt` and `spacecraft` scenes remain for focused deep-dive mode
-- Solar scene becomes the true hub
-
----
-
-### 3. Time Controls
-
-Every serious orrery has playback control. Currently there is no way to pause or change speed without the terminal.
-
-- `Space` → pause / resume
-- Speed slider in the HUD: `0.1×` `1×` `10×` `50×` `200×`
-- Current speed indicator always visible
-- Time direction toggle (run backwards)
+- Mass, diameter, distance from parent, surface temp, number of moons
+- Data already exists in `data.js` / `Comparator` — just needs a click surface
+- Close on Escape or click outside
+- Cyberpunk card aesthetic, consistent with compare modal
 
 ---
 
-### 4. Responsive Canvas
+### 3. Scale Toggle (S key)
 
-The fixed `1200×1200px .space` container breaks on small screens. Scale it to `min(100vw, 100vh)` so the simulation fills any screen correctly.
-
----
-
-### 5. Scale Toggle
-
-- `S` key → switch between **Visual scale** (current — bodies enlarged to be visible) and **Realistic scale** (true proportions — shows how empty space really is)
-- Dramatic effect: at realistic scale the planets nearly disappear against the Sun
+- `S` → switch between **Visual scale** (current — bodies enlarged to be visible) and **Realistic scale** (true proportions)
+- At realistic scale planets nearly vanish — dramatic and educational
 
 ---
 
-### 6. URL Hash State
+### 4. Big Bang Timeline
 
-Make scenes shareable/linkable:
-- `index.html#solar`, `index.html#blackholes`, `index.html#kuiperbelt`
-- On load, read hash and switch to that scene automatically
-- Update hash on every scene switch
+A horizontal scrubber across the full history of the universe.
+
+- 0s → Planck epoch → quark soup → first stars → galaxy formation → today
+- Each era: short label + visual (expanding glow, particle rain, proto-galaxies)
+- Pure canvas, no physics required
+
+---
+
+### 5. Gravitational Lensing (Black Holes scene)
+
+Bend the starfield behind M87* using canvas radial distortion — Kepler/TESS style light-bending effect.
 
 ---
 
 ## Priority Order
 
-1. **Real textures** — biggest visual impact, least code change
-2. **Kuiper Belt + Spacecraft layers** — makes solar scene feel complete
-3. **Time controls** — the #1 missing simulation feature
-4. Responsive canvas
-5. Scale toggle
-6. URL hash state
+1. Zoom — most natural missing interaction
+2. Body info panel — gives every body a reason to exist
+3. Scale toggle — educational gut-punch
+4. Big Bang timeline — storytelling feature
+5. Gravitational lensing — visual spectacle

@@ -88,7 +88,8 @@ function isCompletedToday() {
 }
 
 function getLastScore() {
-  return loadState().score ?? null
+  const n = parseInt(loadState().score, 10)
+  return Number.isFinite(n) ? Math.max(0, Math.min(n, FACTS_PER_DAY)) : 0
 }
 
 // ── Time until midnight (ms) ───────────────────────────────────────────────
