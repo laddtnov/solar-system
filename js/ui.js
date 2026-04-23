@@ -344,11 +344,12 @@ export function initStarParallax() {
   const PARALLAX       = 0.05
   const LERP           = 0.07
 
+  // Decorative star positions — non-cryptographic use of Math.random() is intentional
   const stars = Array.from({ length: STAR_COUNT }, () => ({
-    nx: Math.random(),
-    ny: Math.random(),
-    radius: Math.random() * 1.4 + 0.3,
-    opacity: Math.random() * 0.6 + 0.3,
+    nx:      Math.random(), // NOSONAR
+    ny:      Math.random(), // NOSONAR
+    radius:  Math.random() * 1.4 + 0.3, // NOSONAR
+    opacity: Math.random() * 0.6 + 0.3, // NOSONAR
   }))
 
   let targetX = window.innerWidth  / 2
