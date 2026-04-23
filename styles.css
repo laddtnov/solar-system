@@ -711,9 +711,9 @@ body {
 .sun {
   width: 80px;
   height: 80px;
-  background: radial-gradient(circle, #ffcc00, #ff8800);
+  background: url('../assets/textures/sun.jpg') center/cover, radial-gradient(circle, #ffcc00, #ff8800);
   border-radius: 50%;
-  box-shadow: 0 0 60px rgba(255, 204, 0, 0.5);
+  box-shadow: 0 0 60px rgba(255, 180, 0, 0.7), 0 0 120px rgba(255, 120, 0, 0.3);
   z-index: 100;
 }
 
@@ -722,49 +722,52 @@ body {
 .mercury {
   width: 12px;
   height: 12px;
-  background: #a5a5a5;
+  background: url('../assets/textures/mercury.jpg') center/cover, #a5a5a5;
   border-radius: 50%;
 }
 
 .venus {
   width: 22px;
   height: 22px;
-  background: #e3bb76;
+  background: url('../assets/textures/venus.jpg') center/cover, #e3bb76;
   border-radius: 50%;
+  box-shadow: 0 0 8px rgba(227, 187, 118, 0.4);
 }
 
 .earth {
   width: 25px;
   height: 25px;
-  background: #2b82c9;
+  background: url('../assets/textures/earth.jpg') center/cover, #2b82c9;
   border-radius: 50%;
+  box-shadow: 0 0 10px rgba(43, 130, 201, 0.5);
 }
 
 .mars {
   width: 18px;
   height: 18px;
-  background: #e27b58;
+  background: url('../assets/textures/mars.jpg') center/cover, #e27b58;
   border-radius: 50%;
+  box-shadow: 0 0 6px rgba(226, 123, 88, 0.4);
 }
 
 .jupiter {
   width: 50px;
   height: 50px;
-  background: radial-gradient(circle, #d39c7e, #6b4d3c);
+  background: url('../assets/textures/jupiter.jpg') center/cover, radial-gradient(circle, #d39c7e, #6b4d3c);
   border-radius: 50%;
 }
 
 .saturn {
   width: 45px;
   height: 45px;
-  background: #c5ab6e;
+  background: url('../assets/textures/saturn.jpg') center/cover, #c5ab6e;
   border-radius: 50%;
 }
 
 .uranus {
   width: 30px;
   height: 30px;
-  background: #b3d1d1;
+  background: url('../assets/textures/uranus.jpg') center/cover, #b3d1d1;
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(179, 209, 209, 0.3);
 }
@@ -772,14 +775,15 @@ body {
 .neptune {
   width: 30px;
   height: 30px;
-  background: #6081ff;
+  background: url('../assets/textures/neptune.jpg') center/cover, #6081ff;
   border-radius: 50%;
+  box-shadow: 0 0 10px rgba(96, 129, 255, 0.4);
 }
 
 .pluto {
   width: 10px;
   height: 10px;
-  background: #7f7f7f;
+  background: url('../assets/textures/pluto.jpg') center/cover, #7f7f7f;
   border-radius: 50%;
   z-index: 1001;
 }
@@ -843,7 +847,7 @@ body {
 .moon {
   width: 6px;
   height: 6px;
-  background: #ddd;
+  background: url('../assets/textures/moon.jpg') center/cover, #ddd;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
@@ -1668,7 +1672,7 @@ body {
 .proxima-centauri {
   width: 36px;
   height: 36px;
-  background: radial-gradient(circle at 30% 30%, #ff8866, #ff4422 45%, #cc2200 100%);
+  background: url('../assets/textures/proxima.jpg') center/cover, radial-gradient(circle at 30% 30%, #ff8866, #ff4422 45%, #cc2200 100%);
   box-shadow:
     0 0 30px rgba(255, 68, 34, 0.8),
     0 0 70px rgba(255, 68, 34, 0.4),
@@ -2042,7 +2046,7 @@ body {
 .scene-body.m87-bh {
   width: 130px;
   height: 130px;
-  background: radial-gradient(circle, #000000 25%, #120400 58%, #221000 100%);
+  background: url('../assets/textures/blackhole_m87.jpg') center/cover, radial-gradient(circle, #000000 25%, #120400 58%, #221000 100%);
   box-shadow:
     0 0 0 2px rgba(255, 140, 0, 0.5),
     0 0 0 12px rgba(255, 100, 0, 0.18),
@@ -2112,7 +2116,7 @@ body {
 .scene-body.betelgeuse {
   width: 210px;
   height: 210px;
-  background: radial-gradient(circle at 38% 35%, #ffaa77, #ff4400 42%, #cc2200 68%, #881100 100%);
+  background: url('../assets/textures/betelgeuse.jpg') center/cover, radial-gradient(circle at 38% 35%, #ffaa77, #ff4400 42%, #cc2200 68%, #881100 100%);
   box-shadow:
     0 0 80px rgba(255, 68, 0, 0.9),
     0 0 160px rgba(200, 40, 0, 0.5),
@@ -2279,6 +2283,8 @@ body {
 .scene-body.andromeda {
   width: 240px;
   height: 240px;
+  background: url('../assets/textures/andromeda.jpg') center/cover;
+  border-radius: 50%;
 }
 
 .scene-body.andromeda::before {
