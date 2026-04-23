@@ -131,7 +131,7 @@ body {
 }
 
 #date-panel-btns button:hover {
-  background: rgba(136, 255, 136, 0.12);
+  background: rgba(0, 32, 0, 0.92);
   border-color: #88ff88;
   color: #88ff88;
   box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
@@ -168,7 +168,7 @@ body {
 }
 
 #compare-btn:hover {
-  background: rgba(136, 255, 136, 0.1);
+  background: rgba(0, 32, 0, 0.92);
   border-color: #88ff88;
   color: #88ff88;
   box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
@@ -242,7 +242,7 @@ body {
 }
 
 #quiz-btn:hover {
-  background: rgba(136, 255, 136, 0.1);
+  background: rgba(0, 32, 0, 0.92);
   border-color: #88ff88;
   color: #88ff88;
   box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
@@ -485,9 +485,9 @@ body {
 }
 
 #compare-close:hover {
-  background: rgba(255, 0, 0, 0.15);
-  border-color: #ffb3b3;
-  color: #ffb3b3;
+  background: rgba(60, 0, 0, 0.92);
+  border-color: #ff9999;
+  color: #ffe3e3;
 }
 
 #compare-columns {
