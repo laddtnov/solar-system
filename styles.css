@@ -66,7 +66,7 @@ body {
   flex-direction: column;
   gap: 8px;
   background: rgba(0, 10, 0, 0.88);
-  border: 1px solid #00ff00;
+  border: 1px solid #00cc00;
   box-shadow: 0 0 16px rgba(0, 255, 0, 0.25), inset 0 0 20px rgba(0, 0, 0, 0.5);
   padding: 10px 16px;
   z-index: 9999;
@@ -75,10 +75,10 @@ body {
 }
 
 #date-panel-title {
-  color: #00ff00;
+  color: #00cc00;
   font-size: 11px;
   letter-spacing: 2px;
-  text-shadow: 0 0 6px rgba(0, 255, 0, 0.6);
+  text-shadow: 0 0 6px rgba(0, 204, 0, 0.6);
   border-bottom: 1px solid rgba(0, 255, 0, 0.2);
   padding-bottom: 6px;
   margin-bottom: 4px;
@@ -93,7 +93,7 @@ body {
 #date-input {
   background: rgba(0, 20, 0, 0.9);
   border: 1px solid rgba(0, 255, 0, 0.4);
-  color: #00ff00;
+  color: #00cc00;
   font-family: 'Courier New', monospace;
   font-size: 13px;
   padding: 4px 8px;
@@ -103,7 +103,7 @@ body {
 }
 
 #date-input:focus {
-  border-color: #00ff00;
+  border-color: #00cc00;
   box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
 }
 
@@ -131,9 +131,9 @@ body {
 }
 
 #date-panel-btns button:hover {
-  background: rgba(0, 255, 0, 0.12);
-  border-color: #00ff00;
-  color: #00ff00;
+  background: rgba(0, 204, 0, 0.12);
+  border-color: #00cc00;
+  color: #00cc00;
   box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
 }
 
@@ -168,9 +168,9 @@ body {
 }
 
 #compare-btn:hover {
-  background: rgba(0, 255, 0, 0.1);
-  border-color: #00ff00;
-  color: #00ff00;
+  background: rgba(0, 204, 0, 0.1);
+  border-color: #00cc00;
+  color: #00cc00;
   box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
 }
 
@@ -217,10 +217,10 @@ body {
 }
 
 .overlay-hud-btn.active {
-  border-color: #00ff00;
-  color: #00ff00; /* NOSONAR */
+  border-color: #00cc00;
+  color: #00cc00; /* NOSONAR */
   box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
-  background: rgba(0, 40, 0, 0.9);
+  background: rgba(0, 30, 0, 0.9);
 }
 
 /* ── Quiz Button ────────────────────────────────────────────────────────── */
@@ -242,9 +242,9 @@ body {
 }
 
 #quiz-btn:hover {
-  background: rgba(0, 255, 0, 0.1);
-  border-color: #00ff00;
-  color: #00ff00;
+  background: rgba(0, 204, 0, 0.1);
+  border-color: #00cc00;
+  color: #00cc00;
   box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
 }
 
@@ -374,7 +374,7 @@ body {
 
 .quiz-btn.quiz-wrong {
   background: rgba(60, 0, 0, 0.9);
-  border-color: #ff4444; /* NOSONAR */
+  border-color: #ff6b6b; /* NOSONAR */
   color: #ff6666; /* NOSONAR */
   box-shadow: 0 0 10px rgba(255, 60, 60, 0.3);
 }
@@ -449,7 +449,7 @@ body {
 
 #compare-container {
   background: rgba(0, 8, 0, 0.97);
-  border: 1px solid #00ff00;
+  border: 1px solid #00cc00;
   box-shadow: 0 0 40px rgba(0, 255, 0, 0.2), inset 0 0 40px rgba(0, 0, 0, 0.8);
   width: 100%;
   max-width: 900px;
@@ -466,10 +466,10 @@ body {
   align-items: center;
   padding: 12px 20px;
   border-bottom: 1px solid rgba(0, 255, 0, 0.3);
-  color: #00ff00;
+  color: #00cc00;
   font-size: 13px;
   letter-spacing: 3px;
-  text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+  text-shadow: 0 0 8px rgba(0, 204, 0, 0.6);
   flex-shrink: 0;
 }
 
@@ -486,8 +486,8 @@ body {
 
 #compare-close:hover {
   background: rgba(255, 0, 0, 0.15);
-  border-color: #ff4444;
-  color: #ff4444;
+  border-color: #ff6b6b;
+  color: #ff6b6b;
 }
 
 #compare-columns {
@@ -525,7 +525,7 @@ body {
 .compare-select {
   background: rgba(0, 20, 0, 0.9);
   border: 1px solid rgba(0, 255, 0, 0.4);
-  color: #00ff00;
+  color: #00cc00;
   font-family: 'Courier New', monospace;
   font-size: 11px;
   padding: 6px 8px;
@@ -536,7 +536,7 @@ body {
 }
 
 .compare-select:focus {
-  border-color: #00ff00;
+  border-color: #00cc00;
   box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
 }
 
@@ -559,10 +559,10 @@ body {
 /* Scrollbar for compare-card */
 .compare-card::-webkit-scrollbar { width: 4px; }
 .compare-card::-webkit-scrollbar-track { background: transparent; }
-.compare-card::-webkit-scrollbar-thumb { background: rgba(0, 255, 0, 0.3); border-radius: 2px; }
+.compare-card::-webkit-scrollbar-thumb { background: rgba(0, 204, 0, 0.25); border-radius: 2px; }
 
 .compare-empty {
-  color: rgba(0, 255, 0, 0.3);
+  color: rgba(0, 204, 0, 0.3);
   font-size: 12px;
   letter-spacing: 2px;
   text-align: center;
@@ -584,7 +584,7 @@ body {
 }
 
 .compare-name {
-  color: #00ff00;
+  color: #00cc00;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 2px;
@@ -666,10 +666,10 @@ body {
 
 #speed-hud {
   font-family: 'Courier New', monospace;
-  color: #00ff00;
+  color: #00cc00;
   font-size: 16px;
   pointer-events: none;
-  text-shadow: 0 0 6px rgba(0, 255, 0, 0.6);
+  text-shadow: 0 0 6px rgba(0, 204, 0, 0.6);
   letter-spacing: 2px;
 }
 
@@ -680,8 +680,8 @@ body {
 
 #time-buttons button {
   background: transparent;
-  border: 1px solid #00ff00;
-  color: #00ff00;
+  border: 1px solid #00cc00;
+  color: #00cc00;
   font-family: 'Courier New', monospace;
   font-size: 13px;
   width: 34px;
@@ -694,14 +694,14 @@ body {
 }
 
 #time-buttons button:hover {
-  background: rgba(0, 255, 0, 0.15);
-  box-shadow: 0 0 8px #00ff00;
+  background: rgba(0, 204, 0, 0.15);
+  box-shadow: 0 0 8px #00cc00;
 }
 
 #time-buttons button.active {
-  background: #00ff00;
+  background: #00cc00;
   color: #000;
-  box-shadow: 0 0 12px #00ff00;
+  box-shadow: 0 0 12px #00cc00;
 }
 
 #speed-slider {
@@ -709,7 +709,7 @@ body {
   appearance: none;
   width: 100%;
   height: 4px;
-  background: rgba(0, 255, 0, 0.2);
+  background: rgba(0, 204, 0, 0.2);
   border-radius: 2px;
   outline: none;
   cursor: pointer;
@@ -721,7 +721,7 @@ body {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #00ff00;
+  background: #00cc00;
   box-shadow: 0 0 6px #00ff00;
   cursor: pointer;
 }
@@ -730,7 +730,7 @@ body {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #00ff00;
+  background: #00cc00;
   box-shadow: 0 0 6px #00ff00;
   cursor: pointer;
   border: none;
@@ -759,8 +759,8 @@ body {
 
 #scene-switcher .scene-btn {
   background: transparent;
-  border: 1px solid #00ff00;
-  color: #00ff00;
+  border: 1px solid #00cc00;
+  color: #00cc00;
   font-family: 'Orbitron', sans-serif;
   font-size: 16px;
   width: 36px;
@@ -775,14 +775,14 @@ body {
 }
 
 #scene-switcher .scene-btn:hover {
-  background: rgba(0, 255, 0, 0.2);
-  box-shadow: 0 0 10px #00ff00;
+  background: rgba(0, 204, 0, 0.2);
+  box-shadow: 0 0 10px #00cc00;
 }
 
 #scene-switcher .scene-btn.active {
-  background: #00ff00;
+  background: #00cc00;
   color: #000;
-  box-shadow: 0 0 15px #00ff00;
+  box-shadow: 0 0 15px #00cc00;
 }
 
 /* ── Scene Backgrounds ──────────────────────────────────────────────────── */
@@ -1361,7 +1361,7 @@ body {
   max-height: 80vh;
   overflow-y: auto;
   background: #000;
-  border: 3px solid #00ff00;
+  border: 3px solid #00cc00;
   border-radius: 0;
   padding: 30px;
   box-shadow:
@@ -1369,7 +1369,7 @@ body {
     0 0 40px rgba(0, 255, 0, 0.3),
     inset 0 0 50px rgba(0, 255, 0, 0.05);
   font-family: 'Courier New', monospace;
-  color: #00ff00;
+  color: #00cc00;
   animation: screenFlicker 0.1s infinite;
 }
 
@@ -1405,8 +1405,8 @@ body {
   top: 10px;
   right: 10px;
   background: #000;
-  border: 2px solid #00ff00;
-  color: #00ff00;
+  border: 2px solid #00cc00;
+  color: #00cc00;
   font-size: 20px;
   font-family: 'Courier New', monospace;
   width: 35px;
@@ -1417,9 +1417,9 @@ body {
 }
 
 .close-btn:hover {
-  background: #00ff00;
+  background: #00cc00;
   color: #000;
-  box-shadow: 0 0 15px #00ff00;
+  box-shadow: 0 0 15px #00cc00;
 }
 
 .terminal-container {
@@ -1430,7 +1430,7 @@ body {
 
 .terminal-line {
   font-size: 14px;
-  color: #00ff00;
+  color: #00cc00;
   text-shadow:
     0 0 5px rgba(0, 255, 0, 0.8),
     0 0 10px rgba(0, 255, 0, 0.4);
@@ -1442,7 +1442,7 @@ body {
 
 .cursor {
   display: inline-block;
-  background: #00ff00;
+  background: #00cc00;
   color: #000;
   animation: cursorBlink 0.7s infinite;
   margin-left: 2px;
@@ -1461,7 +1461,7 @@ body {
 
 .terminal-line:nth-child(4) {
   font-size: 24px;
-  color: #00ff00;
+  color: #00cc00;
   text-shadow:
     0 0 10px rgba(0, 255, 0, 1),
     0 0 20px rgba(0, 255, 0, 0.5);
@@ -1480,17 +1480,17 @@ body {
 
 .modal-container::-webkit-scrollbar-track {
   background: #000;
-  border: 1px solid #00ff00;
+  border: 1px solid #00cc00;
 }
 
 .modal-container::-webkit-scrollbar-thumb {
-  background: #00ff00;
+  background: #00cc00;
   border: 1px solid #000;
 }
 
 .modal-container::-webkit-scrollbar-thumb:hover {
   background: #00cc00;
-  box-shadow: 0 0 10px #00ff00;
+  box-shadow: 0 0 10px #00cc00;
 }
 
 .modal-container::before {
@@ -2055,8 +2055,8 @@ body {
   top: 50%;
   transform: translateY(-50%);
   background: rgba(0, 8, 0, 0.95);
-  border: 1px solid #00ff00;
-  color: #00ff00;
+  border: 1px solid #00cc00;
+  color: #00cc00;
   font-family: 'Courier New', monospace;
   font-size: 11px;
   padding: 4px 10px;
