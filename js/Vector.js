@@ -8,7 +8,7 @@ export class Vector {
   add(v)    { return new Vector(this.x + v.x, this.y + v.y) }
   sub(v)    { return new Vector(this.x - v.x, this.y - v.y) }
   scale(s)  { return new Vector(this.x * s, this.y * s) }
-  mag()     { return Math.sqrt(this.x * this.x + this.y * this.y) }
+  mag()     { return Math.hypot(this.x, this.y) }
   magSq()   { return this.x * this.x + this.y * this.y }
   norm()    { const m = this.mag(); return m > 0 ? this.scale(1 / m) : new Vector() }
   distTo(v) { return this.sub(v).mag() }

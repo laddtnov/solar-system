@@ -7,7 +7,7 @@ let audioContext  = null
 
 function initAudioContext() {
   if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)()
+    audioContext = new (globalThis.AudioContext || globalThis.webkitAudioContext)()
   }
   return audioContext
 }
@@ -97,8 +97,8 @@ function positionTooltip(e, tooltip) {
   const tw = 270, th = 150, pad = 20
   let left = e.clientX + pad
   let top  = e.clientY - pad
-  if (left + tw > window.innerWidth)  left = e.clientX - tw - pad
-  if (top + th > window.innerHeight)  top  = e.clientY - th - pad
+  if (left + tw > globalThis.innerWidth)  left = e.clientX - tw - pad
+  if (top + th > globalThis.innerHeight)  top  = e.clientY - th - pad
   if (top < 0)  top  = e.clientY + pad
   if (left < 0) left = e.clientX + pad
   tooltip.style.left = `${left}px`
@@ -110,7 +110,7 @@ function buildTooltipHTML(item) {
     <b style="color:#00ff00;font-size:18px">${item.name}</b>
     <div style="margin-top:5px;font-style:italic">${item.subtitle}</div>
     <div style="font-size:11px;color:#00cc00;margin-top:5px">${item.info}</div>
-    ${item.distance !== '0' ? `<div style="color:#00ff00;margin-top:5px">\ud83d\udccd Distance: ${item.distance}</div>` : ''}
+    ${item.distance === '0' ? '' : `<div style="color:#00ff00;margin-top:5px">\ud83d\udccd Distance: ${item.distance}</div>`}
     <div style="font-size:10px;color:#00ff00;margin-top:8px;animation:blink 1s infinite">\u25ba CLICK TO ACCESS TERMINAL</div>`
 }
 
@@ -158,7 +158,7 @@ function isInBeltRing(e, beltEl) {
   const cy = rect.top  + rect.height / 2
   const dx = e.clientX - cx
   const dy = e.clientY - cy
-  const dist = Math.sqrt(dx * dx + dy * dy)
+  const dist = Math.hypot(dx, dy)
   const outer = rect.width / 2
   const inner = outer * 0.83
   return dist >= inner && dist <= outer
@@ -319,7 +319,7 @@ export function initUI(options = null) {
     // Small delay to let DOM update
     setTimeout(() => {
       document.querySelectorAll('.scene-body[data-body]').forEach(el => {
-        const name = el.getAttribute('data-body')
+        const name = el.dataset.body
         if (planetData[name]) {
           attachBodyListeners(el, name)
         }
@@ -349,16 +349,16 @@ export function initStarParallax() {
     opacity: Math.random() * 0.6 + 0.3, // NOSONAR
   }))
 
-  let targetX = window.innerWidth  / 2
-  let targetY = window.innerHeight / 2
+  let targetX = globalThis.innerWidth  / 2
+  let targetY = globalThis.innerHeight / 2
   let smoothX = targetX
   let smoothY = targetY
 
   document.addEventListener('mousemove', e => { targetX = e.clientX; targetY = e.clientY })
 
-  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight }
+  function resize() { canvas.width = globalThis.innerWidth; canvas.height = globalThis.innerHeight }
   resize()
-  window.addEventListener('resize', resize)
+  globalThis.addEventListener('resize', resize)
 
   function draw() {
     const w  = canvas.width

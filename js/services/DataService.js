@@ -14,11 +14,11 @@ const SOURCES = {
 }
 
 function clone(value) {
-  return JSON.parse(JSON.stringify(value))
+  return structuredClone(value)
 }
 
 export class DataService {
-  constructor({ bus, storage = window.localStorage, fetchImpl = window.fetch } = {}) {
+  constructor({ bus, storage = globalThis.localStorage, fetchImpl = globalThis.fetch } = {}) {
     this.bus = bus
     this.storage = storage
     this.fetchImpl = fetchImpl

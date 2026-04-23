@@ -2273,7 +2273,7 @@ export const sceneBodyConfigs = {
   },
   proximaC: {
     id: 'proximaC',
-    mass: 1.0,
+    mass: 1,
     radius: 10,
     orbitRadius: 140,
     parent: 'proximaCentauri',

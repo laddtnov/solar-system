@@ -140,7 +140,6 @@ function drawKuiperBelt() {
     }
 
     // Label
-    const labelDist = Math.min(dist + 10, Math.hypot(pt.x - CX, pt.y - CY) + 10)
     ctx.font = FONT
     ctx.fillStyle = obj.color + 'cc'
     // Offset label to not overlap dot

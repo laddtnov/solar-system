@@ -5,7 +5,7 @@ import { DataService } from './services/DataService.js'
 import { SceneManager } from './SceneManager.js'
 import { initComparator } from './Comparator.js'
 import { initQuiz } from './Quiz.js'
-import { initSolarOverlay, setOverlaySolar } from './SolarOverlay.js'
+import { initSolarOverlay } from './SolarOverlay.js'
 
 const bus = new EventBus()
 const dataService = new DataService({ bus })
@@ -98,7 +98,7 @@ dateInput?.addEventListener('keydown', (e) => {
 })
 
 // Expose for debugging and external controls
-window.__sim = sim
-window.__bus = bus
-window.__dataService = dataService
-window.__sceneManager = sceneManager
+globalThis.__sim = sim
+globalThis.__bus = bus
+globalThis.__dataService = dataService
+globalThis.__sceneManager = sceneManager

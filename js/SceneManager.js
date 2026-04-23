@@ -194,7 +194,7 @@ export class SceneManager {
       // Use the CSS class from domSelector so styles apply correctly
       const cssClass = config.domSelector.replace(/^\./, '')
       el.className = `scene-body ${cssClass}`
-      el.setAttribute('data-body', config.id)
+      el.dataset.body = config.id
 
       if (config.pulseEffect) {
         el.classList.add('pulsar')

@@ -24,7 +24,7 @@ export class Simulation {
     this.lastTime  = 0
     this.centerX   = 600            // half of 1200 .space
     this.centerY   = 600
-    this.isMobile  = window.innerWidth <= MOBILE_BP
+    this.isMobile  = globalThis.innerWidth <= MOBILE_BP
     this.frameCount = 0
   }
 
@@ -34,9 +34,9 @@ export class Simulation {
     this._buildBodies()
     this._sizeCanvas()
     this._bindKeys()
-    window.addEventListener('resize', () => {
+    globalThis.addEventListener('resize', () => {
       this._sizeCanvas()
-      this.isMobile = window.innerWidth <= MOBILE_BP
+      this.isMobile = globalThis.innerWidth <= MOBILE_BP
     })
     // Pause physics when tab is hidden to avoid dt explosion
     document.addEventListener('visibilitychange', () => {
@@ -142,7 +142,7 @@ export class Simulation {
   // ── Trail Canvas ─────────────────────────────────────────────────────────
 
   _sizeCanvas() {
-    const size  = Math.min(window.innerWidth, window.innerHeight)
+    const size  = Math.min(globalThis.innerWidth, window.innerHeight)
     const scale = Math.min(1, size / 1200)
     document.documentElement.style.setProperty('--space-scale', scale)
     this.canvas.width  = 1200
