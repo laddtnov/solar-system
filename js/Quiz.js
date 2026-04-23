@@ -64,7 +64,7 @@ function seededShuffle(arr, seed) {
 function getDailyFacts() {
   const key = getTodayKey()
   // Convert date string to numeric seed
-  const seed = key.split('-').reduce((acc, n) => acc * 100 + parseInt(n), 0)
+  const seed = key.split('-').reduce((acc, n) => acc * 100 + Number.parseInt(n, 10), 0)
   return seededShuffle(FACT_POOL, seed).slice(0, FACTS_PER_DAY)
 }
 
@@ -88,7 +88,7 @@ function isCompletedToday() {
 }
 
 function getLastScore() {
-  const n = parseInt(loadState().score, 10)
+  const n = Number.parseInt(loadState().score, 10)
   return Number.isFinite(n) ? Math.max(0, Math.min(n, FACTS_PER_DAY)) : 0
 }
 
@@ -180,7 +180,8 @@ function renderFeedback(userAnswer) {
   const actions = modal.querySelector('.quiz-actions')
   const fb = document.createElement('div')
   fb.className = `quiz-feedback ${correct ? 'correct' : 'wrong'}`
-  fb.textContent = correct ? '✓ Correct!' : `✗ False — the correct answer was ${fact.answer ? 'TRUE' : 'FALSE'}.`
+  const correctAnswer = fact.answer ? 'TRUE' : 'FALSE'
+  fb.textContent = correct ? '✓ Correct!' : `✗ False — the correct answer was ${correctAnswer}.`
   actions.after(fb)
 
   setTimeout(() => {

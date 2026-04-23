@@ -197,7 +197,7 @@ export class Simulation {
     document.addEventListener('keydown', (e) => {
       // Don't capture keys when modal is open
       const modal = document.getElementById('planet-modal')
-      if (modal && modal.style.display === 'flex') return
+      if (modal?.style.display === 'flex') return
 
       if (e.key === ']' || e.key === '=') {
         this.speedIdx = Math.min(this.speedIdx + 1, SPEEDS.length - 1)
@@ -220,7 +220,7 @@ export class Simulation {
       }
       // Speed presets: Shift+1..5
       if (e.shiftKey) {
-        const num = parseInt(e.key)
+        const num = Number.parseInt(e.key, 10)
         if (num >= 1 && num <= 5) {
           this.speedIdx = num - 1
           this.timeScale = SPEEDS[this.speedIdx]

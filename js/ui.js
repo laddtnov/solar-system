@@ -227,8 +227,6 @@ export function initUI(options = null) {
   let simulation = null
   let dataService = null
   let bus = null
-  let sceneManager = null
-
   if (
     options &&
     typeof options === 'object' &&
@@ -237,7 +235,6 @@ export function initUI(options = null) {
     simulation = options.simulation ?? null
     dataService = options.dataService ?? null
     bus = options.bus ?? null
-    sceneManager = options.sceneManager ?? null
   } else {
     simulation = options
   }

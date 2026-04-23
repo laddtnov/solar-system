@@ -76,7 +76,7 @@ if (dateInput) {
 
 dateGoBtn?.addEventListener('click', () => {
   const date = new Date(dateInput.value + 'T12:00:00Z')
-  if (!isNaN(date)) sim.goToDate(date)
+  if (!Number.isNaN(date.getTime())) sim.goToDate(date)
 })
 
 dateTodayBtn?.addEventListener('click', () => {
@@ -93,7 +93,7 @@ dateLiveBtn?.addEventListener('click', () => {
 dateInput?.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     const date = new Date(dateInput.value + 'T12:00:00Z')
-    if (!isNaN(date)) sim.goToDate(date)
+    if (!Number.isNaN(date.getTime())) sim.goToDate(date)
   }
 })
 
